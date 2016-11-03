@@ -12,11 +12,12 @@ class StoreUrl extends \Magento\Config\Block\System\Config\Form\Field {
      * @param array $data
      */
     public function __construct(
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        //\Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Backend\Block\Template\Context $context,
         array $data = []
     ) {
-        $this->storeManager = $storeManager;
+        //$this->storeManager = $storeManager;
+        $this->storeManager = $context->getStoreManager();
         parent::__construct($context, $data);
     }
 
