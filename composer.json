@@ -1,5 +1,5 @@
 {
-  "name": "glew/glew-magento2-service",
+  "name": "glewio/glew-magento2-service",
   "description": "Use historical data to uncover your most profitable merchandise, channels, and customer segments",
   "author": [
       {
@@ -9,7 +9,7 @@
       }
    ],
   "type": "magento2-module",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "license": [
     "GPL-3.0+"
   ],
