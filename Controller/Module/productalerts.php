@@ -17,14 +17,14 @@ class Productalerts extends \Glew\Service\Controller\Module {
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Glew\Service\Model\Types\ProductAlerts $productAlerts,
-        \Magento\Framework\ObjectManagerInterface $objectManager,
+        /*\Magento\Framework\ObjectManagerInterface $objectManager,*/
         \Glew\Service\Helper\Data $helper
     ) {
 
         $this->resultJsonFactory = $resultJsonFactory;
         $this->productAlerts = $productAlerts;
         $this->helper = $helper;
-        $this->objectManager = $objectManager;
+        /*$this->objectManager = $objectManager;*/
         parent::__construct($context);
         parent::initParams();
 
