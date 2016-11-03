@@ -17,14 +17,12 @@ class Orders extends \Glew\Service\Controller\Module {
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Glew\Service\Model\Types\Orders $orders,
-        //\Magento\Framework\ObjectManagerInterface $objectManager,
         \Glew\Service\Helper\Data $helper
     ) {
 
         $this->resultJsonFactory = $resultJsonFactory;
         $this->orders = $orders;
         $this->helper = $helper;
-        //$this->objectManager = $objectManager;
         $this->objectManager = $context->getObjectManager();
         parent::__construct($context);
         parent::initParams();

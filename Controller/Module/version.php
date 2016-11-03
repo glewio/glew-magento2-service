@@ -17,13 +17,11 @@ class Version extends \Glew\Service\Controller\Module {
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        //\Magento\Framework\ObjectManagerInterface $objectManager,
         \Glew\Service\Helper\Data $helper
     ) {
 
         $this->resultJsonFactory = $resultJsonFactory;
         $this->helper = $helper;
-        //$this->objectManager = $objectManager;
         $this->objectManager = $context->getObjectManager();
         parent::__construct($context);
         parent::initParams();

@@ -2,7 +2,7 @@
 namespace Glew\Service\Helper;
 
 class Data extends \Magento\Framework\App\Helper\AbstractHelper {
-    
+
     protected $config;
     protected $store;
     protected $context;
@@ -21,15 +21,13 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
      public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\Module\ModuleListInterface $moduleList
      ) {
          parent::__construct($context);
          $this->context = $context;
          $this->storeManager = $storeManager;
-         $this->scopeConfig = $scopeConfig;
-         $this->logger = $logger;
+         $this->scopeConfig = $context->getScopeConfig();
+         $this->logger = $context->getLogger();
          $this->moduleList = $moduleList;
      }
 
