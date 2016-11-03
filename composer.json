@@ -1,0 +1,25 @@
+{
+  "name": "glew/glew-service",
+  "description": "Use historical data to uncover your most profitable merchandise, channels, and customer segments",
+  "author": [
+      {
+         "name": "Glew.",
+         "email": "support@glew.io",
+         "homepage": "https://glew.io/"
+      }
+   ],
+  "type": "magento2-module",
+  "version": "1.0.1",
+  "license": [
+    "GPL-3.0+"
+  ],
+  "require": {
+    "php": "~5.5.0|~5.6.0|~7.0.0"
+  },
+  "autoload": {
+    "files": ["registration.php"],
+    "psr-4": {
+       "Glew\\Service\\": ""
+    }
+  }
+}
