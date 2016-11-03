@@ -51,13 +51,13 @@ class InstallData implements InstallDataInterface {
 
         if(!$this->urlRewrite->getCollection()->getItemByColumnValue('request_path', 'glew/module/abandoned_carts')) {
 
-            $urls[] = array(null, 'custom', 0, 'glew/module/abandoned_carts', 'glew/module/abandonedcarts', 0, $this->storeManager->getStore->getId(), null, 0, null);
-            $urls[] = array(null, 'custom', 0, 'glew/module/newsletter_subscribers', 'glew/module/newslettersubscribers', 0, $this->storeManager->getStore->getId(), null, 0, null);
-            $urls[] = array(null, 'custom', 0, 'glew/module/order_items', 'glew/module/orderitems', 0, $this->storeManager->getStore->getId(), null, 0, null);
-            $urls[] = array(null, 'custom', 0, 'glew/module/product_alerts', 'glew/module/productalerts', 0, $this->storeManager->getStore->getId(), null, 0, null);
-            $urls[] = array(null, 'custom', 0, 'glew/module/refund_items', 'glew/module/refunditems', 0, $this->storeManager->getStore->getId(), null, 0, null);
+            $urls[] = array(null, 'custom', 0, 'glew/module/abandoned_carts', 'glew/module/abandonedcarts', 0, $this->storeManager->getStore()->getId(), null, 0, null);
+            $urls[] = array(null, 'custom', 0, 'glew/module/newsletter_subscribers', 'glew/module/newslettersubscribers', 0, $this->storeManager->getStore()->getId(), null, 0, null);
+            $urls[] = array(null, 'custom', 0, 'glew/module/order_items', 'glew/module/orderitems', 0, $this->storeManager->getStore()->getId(), null, 0, null);
+            $urls[] = array(null, 'custom', 0, 'glew/module/product_alerts', 'glew/module/productalerts', 0, $this->storeManager->getStore()->getId(), null, 0, null);
+            $urls[] = array(null, 'custom', 0, 'glew/module/refund_items', 'glew/module/refunditems', 0, $this->storeManager->getStore()->getId(), null, 0, null);
             $setup->getConnection()->insertArray($setup->getTable(self::$table), self::$fields, $urls);
-            
+
         }
     }
 }
