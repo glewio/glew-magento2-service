@@ -30,7 +30,7 @@ Next, add the required package your root `composer.json` file:
 
 You can also add this using the Composer command line with the command:
 
-    composer require glewio/glew-magento2-service
+    composer require glewio/glew-magento2-service:1.1.0
 
 #### Run Update
 From the command line, run the composer update with the command:
