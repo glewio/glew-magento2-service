@@ -16,11 +16,11 @@ To install, you'll need to be sure that your root `composer.json` file contains 
     ]
 ```
 
-The above can also be added using the Composer command line with the command: 
+⋅⋅⋅The above can also be added using the Composer command line with the command: 
 
     composer config repositories.magento composer http://repo.magento.com/
     
-Next, add the required package your root `composer.json` file:
+⋅⋅⋅Next, add the required package your root `composer.json` file:
 
 ```json
     "require": {
@@ -28,7 +28,7 @@ Next, add the required package your root `composer.json` file:
     }
 ```
 
-You can also add this using the Composer command line with the command:
+⋅⋅⋅You can also add this using the Composer command line with the command:
 
     composer require glewio/glew-magento2-service
 
