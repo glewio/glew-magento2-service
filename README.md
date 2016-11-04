@@ -7,6 +7,12 @@ Glew provides Ecommerce Reporting with Actionable Insights.  Use historical data
 To install, you'll need to be sure that your root `composer.json` file contains a reference to the Glew repository.  To do so, add the following to `composer.json`:
 
 ```json
+    "require": {
+        "glewio/glew-magento2-service": "1.1.0"
+    }
+```
+
+```json
     "repositories": [
         {
             "type": "vcs",                                                                                                              
@@ -14,7 +20,3 @@ To install, you'll need to be sure that your root `composer.json` file contains 
         }
     ]
 ```
-
-The above can also be added using the Composer command line with the command: 
-
-    composer config repositories.magento vcs https://github.com/glewio/glew-magento2-service.git
