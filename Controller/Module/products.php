@@ -52,6 +52,6 @@ class Products extends \Glew\Service\Controller\Module {
             $this->id
         );
 
-        return $result->setData($data);
+        return $result->setData(['products' => $data]);
     }
 }

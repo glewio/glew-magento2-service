@@ -52,6 +52,6 @@ class Refunds extends \Glew\Service\Controller\Module {
             $this->id
         );
 
-        return $result->setData($data);
+        return $result->setData(['refunds' => $data]);
     }
 }

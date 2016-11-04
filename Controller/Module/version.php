@@ -6,7 +6,6 @@ class Version extends \Glew\Service\Controller\Module {
     protected $resultJsonFactory;
     protected $helper = null;
     protected $config = null;
-    protected $objectManager;
 
     /**
      * @param \Magento\Framework\App\Action\Context $context
@@ -34,7 +33,7 @@ class Version extends \Glew\Service\Controller\Module {
     public function execute()
     {
         /** @var \Magento\Framework\Controller\Result\Json $result */
-		$result = $this->resultJsonFactory->create();
+		    $result = $this->resultJsonFactory->create();
         $data = new \stdClass();
         $data->glewPluginVersion = (string) $this->helper->getVersion();
         $data->magentoVersion = (string) $this->objectManager->get('\Magento\Framework\App\ProductMetadata')->getVersion();

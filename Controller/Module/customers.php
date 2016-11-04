@@ -52,6 +52,6 @@ class Customers extends \Glew\Service\Controller\Module {
             $this->filterField,
             $this->id
         );
-        return $result->setData($data);
+        return $result->setData(['customers' => $data]);
     }
 }
