@@ -4,6 +4,7 @@ Glew provides Ecommerce Reporting with Actionable Insights.  Use historical data
 
 ## Installation
 
+1. Update composer.json
 To install, you'll need to be sure that your root `composer.json` file contains a reference to the Glew repository.  To do so, add the following to `composer.json`:
 
 ```json
@@ -30,3 +31,24 @@ Next, add the required package your root `composer.json` file:
 You can also add this using the Composer command line with the command:
 
     composer require glewio/glew-magento2-service
+
+2. Run Update
+From the command line, run the composer update with the command:
+
+    composer update
+
+3. Run setup:upgrade
+From the command line, run setup:upgrade with the command:
+
+    magento setup:upgrade
+
+4. Run di:compile
+From the command line, run di:compile with the command:
+
+    magento setup:di:compile
+    
+
+## Uninstall
+From the command line, run the following command:
+
+    magento module:uninstall Glew_Service
