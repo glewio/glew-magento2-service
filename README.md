@@ -4,6 +4,8 @@ Glew provides Ecommerce Reporting with Actionable Insights.  Use historical data
 
 ## Installation
 
+Before installing, it is recommended that you disable your cache in System -> Cache Mangement.
+
 #### Update composer.json
 To install, you'll need to be sure that your root `composer.json` file contains a reference to the Glew repository.  To do so, add the following to `composer.json`:
 
@@ -47,6 +49,9 @@ From the command line, run di:compile with the command:
 
     magento setup:di:compile
     
+After you have completed these steps, you should clear your cache at System -> Cache Management and then click Flush Cache.  If you have disabled your cache, it can be re-enabled.  Depending on your environment, you may need to clear the following directoris when adding a new module:  var/di, var/generation.  From the command line, you can run the following command to clear your directories:
+    
+    rm -rf /srv/www/var/di/* /srv/www/var/generation/*
 
 ## Uninstall
 From the command line, run the following command:
