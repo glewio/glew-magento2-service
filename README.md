@@ -51,7 +51,7 @@ From the command line, run di:compile with the command:
     
 After you have completed these steps, you should clear your cache at System -> Cache Management and then click Flush Cache.  If you have disabled your cache, it can be re-enabled.  Depending on your environment, you may need to clear the following directoris when adding a new module:  var/di, var/generation.  From the command line, you can run the following command to clear your directories:
     
-    rm -rf <strong><your Magento install dir></strong>/var/di/* <strong><your Magento install dir></strong>/var/generation/*
+    rm -rf <b><your Magento install dir></b>/var/di/* <b><your Magento install dir></b>/var/generation/*
 
 ## Uninstall
 From the command line, run the following command:
