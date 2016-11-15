@@ -20,7 +20,7 @@ To install, you'll need to be sure that your root `composer.json` file contains 
 
 The above can also be added using the Composer command line with the command: 
 
-    composer config repositories.magento vcs https://github.com/glewio/glew-magento2-service.git
+    composer config repositories.glew vcs https://github.com/glewio/glew-magento2-service.git
     
 Next, add the required package your root `composer.json` file:
 
