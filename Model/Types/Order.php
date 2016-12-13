@@ -1,12 +1,9 @@
 <?php
 namespace Glew\Service\Model\Types;
-
 class Order {
-
     protected $helper;
     protected $group;
     protected $objectManager;
-
     /**
      * @param \Magento\Customer\Model\Group $group
      * @param \Glew\Service\Helper\Data $helper
@@ -21,7 +18,6 @@ class Order {
         $this->helper = $helper;
         $this->objectManager = $objectManager;
     }
-
     public function parse($order)
     {
         $this->id = $order->getId();
@@ -48,13 +44,11 @@ class Order {
         } catch (Exception $e) {
             $this->payment_method = '';
         }
-
         $this->discount_amount = round($order->getDiscountAmount(), 2);
         $this->discount_description = $order->getDiscountDescription();
         $this->weight = $order->getWeight();
         $this->remote_ip = $order->getRemoteIp();
         $this->store = $order->getStore()->getCode();
-
         return $this;
     }
 }

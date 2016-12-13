@@ -1,28 +1,34 @@
 <?php
 namespace Glew\Service\Model\Types;
 
+use Magento\Customer\Model\Group;
+use Glew\Service\Helper\Data;
+use Glew\Service\Model\Types\AddressFactory;
+
 class Customer {
 
     protected $helper;
     protected $group;
-    protected $objectManager;
+    protected $addressFactory;
 
     /**
      * @param \Magento\Customer\Model\Group $group
      * @param \Glew\Service\Helper\Data $helper
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Glew\Service\Model\Types\AddressFactory $addressFactory
      */
     public function __construct(
-        \Magento\Customer\Model\Group $group,
-        \Glew\Service\Helper\Data $helper,
-        \Magento\Framework\ObjectManagerInterface $objectManager
+        Group $group,
+        Data $helper,
+        AddressFactory $addressFactory
     ) {
         $this->group = $group;
         $this->helper = $helper;
-        $this->objectManager = $objectManager;
+        $this->addressFactory = $addressFactory;
     }
 
     public function parse($customer) {
+
+        $addressParser = $this->addressFactory->create();
 
         if (!$customer) {
             return $this;
@@ -44,7 +50,7 @@ class Customer {
         $this->store = ((bool) $customer->getStore()->getCode()) ? $customer->getStore()->getCode() : '';
         $this->addresses = array();
 
-        $addressParser = $this->objectManager->create('\Glew\Service\Model\Types\Address');
+        $addressParser = $this->addressFactory->create();
         if ($customer->getDefaultShippingAddress()) {
             $address = $addressParser->parse($customer->getDefaultShippingAddress());
             if ($address) {

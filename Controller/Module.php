@@ -11,7 +11,6 @@ abstract class Module extends \Magento\Framework\App\Action\Action {
     protected $filterField = 'created_at';
     protected $id = null;
     protected $helper;
-    protected $objectManager;
 
     protected function initParams() {
         if ((bool) $pageSize = $this->getRequest()->getParam('page_size')) {

@@ -1,15 +1,12 @@
 <?php
 namespace Glew\Service\Model\Types;
-
 class Products {
-
     public $products = array();
     protected $helper;
     protected $productFactory;
     protected $objectManager;
     private $pageNum;
     private $productAttributes = array();
-
     /**
      * @param \Glew\Service\Helper\Data $helper
      * @param \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productFactory
@@ -24,7 +21,6 @@ class Products {
         $this->productFactory = $productFactory;
         $this->objectManager = $objectManager;
     }
-
     public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id)
     {
         $config = $this->helper->getConfig();
@@ -37,7 +33,6 @@ class Products {
         } elseif ($startDate && $endDate) {
             $from = date('Y-m-d 00:00:00', strtotime($startDate));
             $to = date('Y-m-d 23:59:59', strtotime($endDate));
-
             $products = $this->productFactory->create()
                 ->addAttributeToSelect('*')
                 ->addAttributeToFilter($filterBy, array('from' => $from, 'to' => $to));
@@ -45,16 +40,14 @@ class Products {
             $products = $this->productFactory->create()
                 ->addAttributeToSelect('*');
         }
-        
+
         $products->setStore($this->helper->getStore());
         $products->setOrder('updated_at', $sortDir);
         $products->setCurPage($pageNum);
         $products->setPageSize($pageSize);
-
         if ($products->getLastPageNumber() < $pageNum) {
             return $this;
         }
-
         foreach ($products as $product) {
             $productId = $product->getId();
             $model = $this->objectManager->create('\Glew\Service\Model\Types\Product')->parse($productId, $this->productAttributes);
@@ -65,10 +58,8 @@ class Products {
                 $this->products[] = $model;
             }
         }
-
         return $this->products;
     }
-
     protected function _getProductAttribtues()
     {
         if (!$this->productAttributes) {
@@ -84,7 +75,6 @@ class Products {
             }
         }
     }
-
     protected function _getCrossSellProducts($product)
     {
         $productArray = array();
@@ -94,10 +84,8 @@ class Products {
                 $productArray[] = $item->getId();
             }
         }
-
         return $productArray;
     }
-
     protected function _getUpSellProducts($product)
     {
         $productArray = array();
@@ -107,10 +95,8 @@ class Products {
                 $productArray[] = $item->getId();
             }
         }
-
         return $productArray;
     }
-
     protected function _getRelatedProducts($product)
     {
         $productArray = array();
@@ -120,7 +106,6 @@ class Products {
                 $productArray[] = $item->getId();
             }
         }
-
         return $productArray;
     }
 }

@@ -11,5 +11,6 @@ class ProductAlert {
         $this->created_at = $alert->getAddDate();
 
         return $this;
+        
     }
 }

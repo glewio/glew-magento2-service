@@ -1,6 +1,9 @@
 <?php
 namespace Glew\Service\Model\Types;
 
+use Glew\Service\Helper\Data;
+use Magento\Directory\Model\Region;
+
 class Address {
 
     const BILLING_ADDRESS_TYPE = 1;
@@ -26,8 +29,8 @@ class Address {
      * @param \Magento\Directory\Model\Region $region
      */
     public function __construct(
-        \Glew\Service\Helper\Data $helper,
-        \Magento\Directory\Model\Region $region
+        Data $helper,
+        Region $region
     ) {
         $this->helper = $helper;
         $this->region = $region;

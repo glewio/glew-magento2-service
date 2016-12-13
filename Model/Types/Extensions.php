@@ -5,9 +5,6 @@ class Extensions {
 
     public $extensions = array();
 
-    /**
-     *
-     */
     public function __construct(
         // deprecated this api call
     ) {}

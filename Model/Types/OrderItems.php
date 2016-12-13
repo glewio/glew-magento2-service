@@ -1,8 +1,6 @@
 <?php
 namespace Glew\Service\Model\Types;
-
 class OrderItems {
-
     public $orderItems = array();
     private $pageNum;
     protected $helper;
@@ -10,7 +8,6 @@ class OrderItems {
     protected $objectManager;
     protected $eavConfig;
     protected $resource;
-
     /**
      * @param \Glew\Service\Helper\Data $helper
      * @param \Magento\Sales\Model\ResourceModel\Order\Item\CollectionFactory $orderItemsFactory
@@ -31,13 +28,11 @@ class OrderItems {
         $this->eavConfig = $eavConfig;
         $this->resource = $resource;
     }
-
     public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id)
     {
         $config = $this->helper->getConfig();
         $store = $this->helper->getStore();
         $this->pageNum = $pageNum;
-
         $attribute = $this->eavConfig->getAttribute(\Magento\Catalog\Model\Product::ENTITY, 'cost');
         if ($id) {
             $collection = $this->orderItemsFactory->create()
@@ -45,7 +40,6 @@ class OrderItems {
         } elseif ($startDate && $endDate) {
             $from = date('Y-m-d 00:00:00', strtotime($startDate));
             $to = date('Y-m-d 23:59:59', strtotime($endDate));
-
             $collection = $this->orderItemsFactory->create()
                 ->addAttributeToFilter($filterBy, array('from' => $from, 'to' => $to));
         } else {
@@ -64,7 +58,6 @@ class OrderItems {
         if ($collection->getLastPageNumber() < $pageNum) {
             return $this;
         }
-
         foreach ($collection as $orderItem) {
             $continue = true;
             if ($orderItem && $orderItem->getId()) {
@@ -85,7 +78,6 @@ class OrderItems {
                 }
             }
         }
-
         return $this->orderItems;
     }
 }

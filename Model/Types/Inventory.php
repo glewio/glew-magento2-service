@@ -1,15 +1,12 @@
 <?php
 namespace Glew\Service\Model\Types;
-
 class Inventory {
-
     public $inventory = array();
     private $pageNum;
     protected $helper;
     protected $productFactory;
     protected $objectManager;
     protected $catalogConfig;
-
     /**
      * @param \Glew\Service\Helper\Data $helper
      * @param \Magento\Framework\ObjectManagerInterface $objectManager
@@ -27,7 +24,6 @@ class Inventory {
         $this->objectManager = $objectManager;
         $this->catalogConfig = $catalogConfig;
     }
-
     public function load($pageSize, $pageNum, $sortDir, $filterBy, $id)
     {
         $config = $this->helper->getConfig();
@@ -44,11 +40,9 @@ class Inventory {
         $inventory->setOrder('entity_id', $sortDir);
         $inventory->setCurPage($pageNum);
         $inventory->setPageSize($pageSize);
-
         if ($inventory->getLastPageNumber() < $pageNum) {
             return $this;
         }
-
         foreach ($inventory as $product) {
             $productParser = $this->objectManager->create('\Glew\Service\Model\Types\InventoryItem');
             $model = $productParser->parse($product);
@@ -56,7 +50,6 @@ class Inventory {
                 $this->inventory[] = $model;
             }
         }
-
         return $this->inventory;
     }
 }

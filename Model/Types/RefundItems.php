@@ -1,30 +1,35 @@
 <?php
 namespace Glew\Service\Model\Types;
 
+use Glew\Service\Helper\Data;
+use Magento\Sales\Model\ResourceModel\Order\Creditmemo\CollectionFactory;
+use Glew\Service\Model\Types\RefundItemFactory;
+use Magento\Framework\App\ResourceConnection;
+
 class RefundItems {
 
     public $refundItems = array();
     protected $helper;
     protected $refundsCollection;
-    protected $objectManager;
+    protected $refundItemFactory;
     protected $resource;
     private $pageNum;
 
     /**
      * @param \Glew\Service\Helper\Data $helper
      * @param \Magento\Sales\Model\ResourceModel\Order\Creditmemo\CollectionFactory $refundsCollection
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Glew\Service\Model\Types\RefundItemFactory $refundItemFactory
      * @param \Magento\Framework\App\ResourceConnection $resource
      */
     public function __construct(
-        \Glew\Service\Helper\Data $helper,
-        \Magento\Sales\Model\ResourceModel\Order\Creditmemo\CollectionFactory $refundsCollection,
-        \Magento\Framework\ObjectManagerInterface $objectManager,
-        \Magento\Framework\App\ResourceConnection $resource
+        Data $helper,
+        CollectionFactory $refundsCollection,
+        RefundItemFactory $refundItemFactory,
+        ResourceConnection $resource
     ) {
         $this->helper = $helper;
         $this->refundsCollection = $refundsCollection;
-        $this->objectManager = $objectManager;
+        $this->refundItemFactory = $refundItemFactory;
         $this->resource = $resource;
     }
 
@@ -55,8 +60,9 @@ class RefundItems {
             return $this;
         }
 
+        $refundItem = $this->refundItemFactory->create();
         foreach ($refunds as $refund) {
-            $model = $this->objectManager->create('\Glew\Service\Model\Types\RefundItem')->parse($refund);
+            $model = $refundItem->parse($refund);
             if ($model) {
                 $this->refundItems[] = $model;
             }

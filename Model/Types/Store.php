@@ -8,7 +8,6 @@ class Store {
         foreach ($store->getData() as $key => $value) {
             $this->$key = $value;
         }
-
         return $this;
     }
 }

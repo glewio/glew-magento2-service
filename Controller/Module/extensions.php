@@ -1,29 +1,32 @@
 <?php
 namespace Glew\Service\Controller\Module;
 
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Glew\Service\Model\Types\ExtensionsFactory;
+use Glew\Service\Helper\Data;
+
 class Extensions extends \Glew\Service\Controller\Module {
 
     protected $resultJsonFactory;
-    protected $extensions;
+    protected $extensionsFactory;
 
     /**
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Glew\Service\Model\Types\Extensions $extensions
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Glew\Service\Model\Types\ExtensionsFactory $extensionsFactory
      * @param \Glew\Service\Helper\Data $helper
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Glew\Service\Model\Types\Extensions $extensions,
-        \Glew\Service\Helper\Data $helper
+        Context $context,
+        JsonFactory $resultJsonFactory,
+        ExtensionsFactory $extensionsFactory,
+        Data $helper
     ) {
 
         $this->resultJsonFactory = $resultJsonFactory;
-        $this->extensions = $extensions;
+        $this->extensionsFactory = $extensionsFactory;
         $this->helper = $helper;
-        $this->objectManager = $context->getObjectManager();
         parent::__construct($context);
         parent::initParams();
 
@@ -35,6 +38,7 @@ class Extensions extends \Glew\Service\Controller\Module {
     public function execute()
     {
         $result = $this->resultJsonFactory->create();
+        $extensions = $this->extensionsFactory->create();
 
         if($this->isAuthorized() != true || $this->isEnabled() != true) {
             $result->setHttpResponseCode(\Magento\Framework\App\Response\Http::STATUS_CODE_401);
@@ -42,7 +46,7 @@ class Extensions extends \Glew\Service\Controller\Module {
             return $result;
         }
 
-        $data = $this->extensions->load(
+        $data = $extensions->load(
             $this->pageSize,
             $this->pageNum,
             $this->startDate,

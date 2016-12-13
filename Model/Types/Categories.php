@@ -1,31 +1,36 @@
 <?php
 namespace Glew\Service\Model\Types;
 
+use Glew\Service\Helper\Data;
+use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory;
+use Glew\Service\Model\Types\CategoryFactory;
+
 class Categories {
 
     public $categories = array();
     protected $helper;
     protected $categoryCollection;
-    protected $objectManager;
+    protected $categoryFactory;
     private $pageNum;
 
     /**
      * @param \Glew\Service\Helper\Data $helper
      * @param \Magento\Catalog\Model\Resource\Category\CollectionFactory $categoryCollection
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Glew\Service\Model\Types\CategoryFactory $categoryFactory
      */
     public function __construct(
-        \Glew\Service\Helper\Data $helper,
-        \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory $categoryCollection,
-        \Magento\Framework\ObjectManagerInterface $objectManager
+        Data $helper,
+        CollectionFactory $categoryCollection,
+        CategoryFactory $categoryFactory
     ) {
         $this->helper = $helper;
         $this->categoryCollection = $categoryCollection;
-        $this->objectManager = $objectManager;
+        $this->categoryFactory = $categoryFactory;
     }
 
     public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id)
     {
+        $category = $this->categoryFactory->create();
         $config = $this->helper->getConfig();
         $this->pageNum = $pageNum;
 
@@ -51,7 +56,6 @@ class Categories {
         }
 
         foreach ($categories as $cat) {
-            $category = $this->objectManager->create('\Glew\Service\Model\Types\Category');
             $model = $category->parse($cat);
             if ($model) {
                 $this->categories[] = $model;

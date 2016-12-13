@@ -1,29 +1,32 @@
 <?php
 namespace Glew\Service\Controller\Module;
 
-class Abandonedcarts extends \Glew\Service\Controller\Module {
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Glew\Service\Model\Types\AbandonedCartsFactory;
+use Glew\Service\Helper\Data;
+
+class AbandonedCarts extends \Glew\Service\Controller\Module {
 
     protected $resultJsonFactory;
-    protected $abandonedCarts;
+    protected $abandonedCartsFactory;
 
     /**
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Glew\Service\Model\Types\AbandonedCarts $abandonedCarts
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Glew\Service\Model\Types\AbandonedCarts $abandonedCartsFactory
      * @param \Glew\Service\Helper\Data $helper
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Glew\Service\Model\Types\AbandonedCarts $abandonedCarts,
-        \Glew\Service\Helper\Data $helper
+        Context $context,
+        JsonFactory $resultJsonFactory,
+        AbandonedCartsFactory $abandonedCartsFactory,
+        Data $helper
     ) {
 
         $this->resultJsonFactory = $resultJsonFactory;
-        $this->abandonedCarts = $abandonedCarts;
+        $this->abandonedCartsFactory = $abandonedCartsFactory;
         $this->helper = $helper;
-        $this->objectManager = $context->getObjectManager();
         parent::__construct($context);
         parent::initParams();
 
@@ -35,6 +38,7 @@ class Abandonedcarts extends \Glew\Service\Controller\Module {
     public function execute()
     {
         $result = $this->resultJsonFactory->create();
+        $abandonedCarts = $this->abandonedCartsFactory->create();
 
         if($this->isAuthorized() != true || $this->isEnabled() != true) {
             $result->setHttpResponseCode(\Magento\Framework\App\Response\Http::STATUS_CODE_401);
@@ -42,7 +46,7 @@ class Abandonedcarts extends \Glew\Service\Controller\Module {
             return $result;
         }
 
-        $data = $this->abandonedCarts->load(
+        $data = $abandonedCarts->load(
             $this->pageSize,
             $this->pageNum,
             $this->startDate,

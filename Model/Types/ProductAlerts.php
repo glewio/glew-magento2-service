@@ -1,27 +1,31 @@
 <?php
 namespace Glew\Service\Model\Types;
 
+use Glew\Service\Helper\Data;
+use Magento\ProductAlert\Model\ResourceModel\Stock\CollectionFactory;
+use Glew\Service\Model\Types\ProductAlertFactory;
+
 class ProductAlerts {
 
     public $alerts = array();
     protected $helper;
     protected $productAlertCollection;
-    protected $objectManager;
+    protected $productAlertFactory;
     private $pageNum;
 
     /**
      * @param \Glew\Service\Helper\Data $helper
      * @param \Magento\ProductAlert\Model\ResourceModel\Stock\CollectionFactory $productAlertCollection
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Glew\Service\Model\Types\ProductAlertFactory $productAlertFactory
      */
     public function __construct(
-        \Glew\Service\Helper\Data $helper,
-        \Magento\ProductAlert\Model\ResourceModel\Stock\CollectionFactory $productAlertCollection,
-        \Magento\Framework\ObjectManagerInterface $objectManager
+        Data $helper,
+        CollectionFactory $productAlertCollection,
+        ProductAlertFactory $productAlertFactory
     ) {
         $this->helper = $helper;
         $this->productAlertCollection = $productAlertCollection;
-        $this->objectManager = $objectManager;
+        $this->productAlertFactory = $productAlertFactory;
     }
 
     public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id)
@@ -47,8 +51,9 @@ class ProductAlerts {
             return $this;
         }
 
+        $productAlert = $this->productAlertFactory->create();
         foreach ($alerts as $alert) {
-            $model = $this->objectManager->create('\Glew\Service\Model\Types\ProductAlert')->parse($alert);
+            $model = $productAlert->parse($alert);
             if ($model) {
                 $this->alerts[] = $model;
             }

@@ -1,29 +1,32 @@
 <?php
 namespace Glew\Service\Controller\Module;
 
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Glew\Service\Model\Types\ProductsFactory;
+use Glew\Service\Helper\Data;
+
 class Products extends \Glew\Service\Controller\Module {
 
     protected $resultJsonFactory;
-    protected $products;
+    protected $productsFactory;
 
     /**
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Glew\Service\Model\Types\Products $products
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Glew\Service\Model\Types\ProductsFactory $productsFactory
      * @param \Glew\Service\Helper\Data $helper
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Glew\Service\Model\Types\Products $products,
-        \Glew\Service\Helper\Data $helper
+        Context $context,
+        JsonFactory $resultJsonFactory,
+        ProductsFactory $productsFactory,
+        Data $helper
     ) {
 
         $this->resultJsonFactory = $resultJsonFactory;
-        $this->products = $products;
+        $this->productsFactory = $productsFactory;
         $this->helper = $helper;
-        $this->objectManager = $context->getObjectManager();
         parent::__construct($context);
         parent::initParams();
 
@@ -35,6 +38,7 @@ class Products extends \Glew\Service\Controller\Module {
     public function execute()
     {
         $result = $this->resultJsonFactory->create();
+        $products = $this->productsFactory->create();
 
         if($this->isAuthorized() != true || $this->isEnabled() != true) {
             $result->setHttpResponseCode(\Magento\Framework\App\Response\Http::STATUS_CODE_401);
@@ -42,7 +46,7 @@ class Products extends \Glew\Service\Controller\Module {
             return $result;
         }
 
-        $data = $this->products->load(
+        $data = $products->load(
             $this->pageSize,
             $this->pageNum,
             $this->startDate,

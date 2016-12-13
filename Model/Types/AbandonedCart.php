@@ -1,25 +1,24 @@
 <?php
 namespace Glew\Service\Model\Types;
 
+use Magento\Customer\Model\Group;
+use Glew\Service\Helper\Data;
+
 class AbandonedCart {
 
     protected $helper;
     protected $group;
-    protected $objectManager;
-
+    
     /**
      * @param \Magento\Customer\Model\Group $group
      * @param \Glew\Service\Helper\Data $helper
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
      */
     public function __construct(
-        \Magento\Customer\Model\Group $group,
-        \Glew\Service\Helper\Data $helper,
-        \Magento\Framework\ObjectManagerInterface $objectManager
+        Group $group,
+        Data $helper
     ) {
         $this->group = $group;
         $this->helper = $helper;
-        $this->objectManager = $objectManager;
     }
 
     public function parse($cart)

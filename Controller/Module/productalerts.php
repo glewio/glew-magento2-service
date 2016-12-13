@@ -1,29 +1,32 @@
 <?php
 namespace Glew\Service\Controller\Module;
 
-class Productalerts extends \Glew\Service\Controller\Module {
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Glew\Service\Model\Types\ProductAlertsFactory;
+use Glew\Service\Helper\Data;
+
+class ProductAlerts extends \Glew\Service\Controller\Module {
 
     protected $resultJsonFactory;
-    protected $productAlerts;
+    protected $productAlertsFactory;
 
     /**
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Glew\Service\Model\Types\ProductAlerts $productAlerts
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Glew\Service\Model\Types\ProductAlertsFactory $productAlertsFactory
      * @param \Glew\Service\Helper\Data $helper
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Glew\Service\Model\Types\ProductAlerts $productAlerts,
-        \Glew\Service\Helper\Data $helper
+        Context $context,
+        JsonFactory $resultJsonFactory,
+        ProductAlertsFactory $productAlertsFactory,
+        Data $helper
     ) {
 
         $this->resultJsonFactory = $resultJsonFactory;
-        $this->productAlerts = $productAlerts;
+        $this->productAlertsFactory = $productAlertsFactory;
         $this->helper = $helper;
-        $this->objectManager = $context->getObjectManager();
         parent::__construct($context);
         parent::initParams();
 
@@ -35,6 +38,7 @@ class Productalerts extends \Glew\Service\Controller\Module {
     public function execute()
     {
         $result = $this->resultJsonFactory->create();
+        $productAlerts = $this->productAlertsFactory->create();
 
         if($this->isAuthorized() != true || $this->isEnabled() != true) {
             $result->setHttpResponseCode(\Magento\Framework\App\Response\Http::STATUS_CODE_401);
@@ -42,7 +46,7 @@ class Productalerts extends \Glew\Service\Controller\Module {
             return $result;
         }
 
-        $data = $this->productAlerts->load(
+        $data = $productAlerts->load(
             $this->pageSize,
             $this->pageNum,
             $this->startDate,

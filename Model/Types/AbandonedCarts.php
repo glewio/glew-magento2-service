@@ -1,31 +1,36 @@
 <?php
 namespace Glew\Service\Model\Types;
 
+use Glew\Service\Helper\Data;
+use Magento\Reports\Model\ResourceModel\Quote\Collection;
+use Glew\Service\Model\Types\AbandonedCartFactory;
+
 class AbandonedCarts
 {
     public $carts = array();
     protected $helper;
     protected $cartCollection;
-    protected $objectManager;
+    protected $abandonedCartFactory;
     private $pageNum;
 
     /**
      * @param \Glew\Service\Helper\Data $helper
      * @param \Magento\Reports\Model\ResourceModel\Quote\Collection $cartCollection
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Glew\Service\Model\Types\AbandonedCartFactory
      */
     public function __construct(
-        \Glew\Service\Helper\Data $helper,
-        \Magento\Reports\Model\ResourceModel\Quote\Collection $cartCollection,
-        \Magento\Framework\ObjectManagerInterface $objectManager
+        Data $helper,
+        Collection $cartCollection,
+        AbandonedCartFactory $abandonedCartFactory
     ) {
         $this->helper = $helper;
         $this->cartCollection = $cartCollection;
-        $this->objectManager = $objectManager;
+        $this->abandonedCartFactory = $abandonedCartFactory;
     }
 
     public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id)
     {
+        $abandonedCarts = $this->abandonedCartFactory->create();
         $config = $this->helper->getConfig();
         $this->pageNum = $pageNum;
         if($id) {
@@ -57,7 +62,7 @@ class AbandonedCarts
 
         foreach ($collection as $cart) {
             if ($cart) {
-                $model = $this->objectManager->create('\Glew\Service\Model\Types\AbandonedCart')->parse($cart);
+                $model = $abandonedCarts->parse($cart);
                 if ($model) {
                     $this->carts[] = $model;
                 }

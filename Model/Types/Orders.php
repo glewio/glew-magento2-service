@@ -1,14 +1,11 @@
 <?php
 namespace Glew\Service\Model\Types;
-
 class Orders {
-
     public $orders = array();
     protected $helper;
     protected $orderCollection;
     protected $objectManager;
     private $pageNum;
-
     /**
      * @param \Glew\Service\Helper\Data $helper
      * @param \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollection
@@ -23,12 +20,10 @@ class Orders {
         $this->orderCollection = $orderCollection;
         $this->objectManager = $objectManager;
     }
-
     public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id)
     {
         $config = $this->helper->getConfig();
         $this->pageNum = $pageNum;
-
         if ($id) {
             $collection = $this->orderCollection->create()
                 ->addAttributeToFilter('main_table.increment_id', $id);
@@ -44,7 +39,6 @@ class Orders {
         $collection->addAttributeToSort('created_at', $sortDir);
         $collection->setCurPage($pageNum);
         $collection->setPageSize($pageSize);
-
         if ($collection->getLastPageNumber() < $pageNum) {
             return $this;
         }
@@ -56,7 +50,6 @@ class Orders {
                 }
             }
         }
-
         return $this->orders;
     }
 }

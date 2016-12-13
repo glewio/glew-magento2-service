@@ -1,23 +1,26 @@
 <?php
 namespace Glew\Service\Model\Types;
 
+use Glew\Service\Helper\Data;
+use Glew\Service\Model\Types\StoreFactory;
+
 class Stores {
 
     public $stores = array();
     protected $helper;
-    protected $objectManager;
+    protected $storeFactory;
     private $pageNum;
 
     /**
      * @param \Glew\Service\Helper\Data $helper
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Glew\Service\Model\Types\StoreFactory $storeFactory
      */
     public function __construct(
-        \Glew\Service\Helper\Data $helper,
-        \Magento\Framework\ObjectManagerInterface $objectManager
+        Data $helper,
+        StoreFactory $storeFactory
     ) {
         $this->helper = $helper;
-        $this->objectManager = $objectManager;
+        $this->storeFactory = $storeFactory;
     }
 
     public function load($pageSize, $pageNum)
@@ -27,10 +30,12 @@ class Stores {
 
         $stores = $this->helper->getStores();
         $stores = $this->helper->paginate($stores, $pageNum, $pageSize);
+
+        $glewStore = $this->storeFactory->create();
         foreach($stores as $store) {
-            $model = $this->objectManager->create('\Glew\Service\Model\Types\Store')->parse($store);
-            if ($model) {
-                $this->stores[] = $model;
+            $storeModel = $glewStore->parse($store);
+            if ($storeModel) {
+                $this->stores[] = $storeModel;
             }
         }
 

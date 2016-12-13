@@ -1,6 +1,10 @@
 <?php
 namespace Glew\Service\Helper;
 
+use Magento\Framework\App\Helper\Context;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\Module\ModuleListInterface;
+
 class Data extends \Magento\Framework\App\Helper\AbstractHelper {
 
     protected $config;
@@ -19,9 +23,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
      * @param \Magento\Framework\Module\ModuleListInterface $moduleList
      */
      public function __construct(
-        \Magento\Framework\App\Helper\Context $context,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\Module\ModuleListInterface $moduleList
+        Context $context,
+        StoreManagerInterface $storeManager,
+        ModuleListInterface $moduleList
      ) {
          parent::__construct($context);
          $this->context = $context;
@@ -32,7 +36,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
      }
 
      public function getBaseDir() {
-         return $this->context->getBaseDir().'/app/code/community/Glew/';
+         return $this->context->getBaseDir().'/app/code/Glew/';
      }
 
      public function getConfig() {

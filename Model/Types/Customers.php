@@ -1,15 +1,12 @@
 <?php
 namespace Glew\Service\Model\Types;
-
 class Customers {
-
     public $customers = array();
     private $pageNum;
     protected $helper;
     protected $customerFactory;
     protected $mageCustomer;
     protected $objectManager;
-
     /**
      * @param \Glew\Service\Helper\Data $helper
      * @param \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $customerFactory
@@ -27,7 +24,6 @@ class Customers {
         $this->mageCustomer = $mageCustomer;
         $this->objectManager = $objectManager;
     }
-
     public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id) {
         $config = $this->helper->getConfig();
         $this->pageNum = $pageNum;
@@ -37,7 +33,6 @@ class Customers {
         } elseif ($startDate && $endDate) {
             $from = date('Y-m-d 00:00:00', strtotime($startDate));
             $to = date('Y-m-d 23:59:59', strtotime($endDate));
-
             $collection = $this->customerFactory->create()
                 ->addAttributeToFilter($filterBy, array('from' => $from, 'to' => $to));
         } else {
@@ -47,7 +42,6 @@ class Customers {
         $collection->setOrder('created_at', $sortDir);
         $collection->setCurPage($pageNum);
         $collection->setPageSize($pageSize);
-
         if ($collection->getLastPageNumber() < $pageNum) {
             return $this;
         }
@@ -62,7 +56,6 @@ class Customers {
                 }
             }
         }
-
         return $this->customers;
     }
 }

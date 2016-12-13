@@ -1,29 +1,32 @@
 <?php
 namespace Glew\Service\Controller\Module;
 
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Glew\Service\Model\Types\CustomersFactory;
+use Glew\Service\Helper\Data;
+
 class Customers extends \Glew\Service\Controller\Module {
 
     protected $resultJsonFactory;
-    protected $customers;
+    protected $customersFactory;
 
     /**
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Glew\Service\Model\Types\Customers $customers
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Glew\Service\Model\Types\CustomersFactory $customersFactory
      * @param \Glew\Service\Helper\Data $helper
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Glew\Service\Model\Types\Customers $customers,
-        \Glew\Service\Helper\Data $helper
+        Context $context,
+        JsonFactory $resultJsonFactory,
+        CustomersFactory $customersFactory,
+        Data $helper
     ) {
 
         $this->resultJsonFactory = $resultJsonFactory;
-        $this->customers = $customers;
+        $this->customersFactory = $customersFactory;
         $this->helper = $helper;
-        $this->objectManager = $context->getObjectManager();
         parent::__construct($context);
         parent::initParams();
 
@@ -34,8 +37,8 @@ class Customers extends \Glew\Service\Controller\Module {
      */
     public function execute()
     {
-
-		$result = $this->resultJsonFactory->create();
+		    $result = $this->resultJsonFactory->create();
+        $customers = $this->customersFactory->create();
 
         if($this->isAuthorized() != true || $this->isEnabled() != true) {
             $result->setHttpResponseCode(\Magento\Framework\App\Response\Http::STATUS_CODE_401);
@@ -43,7 +46,7 @@ class Customers extends \Glew\Service\Controller\Module {
             return $result;
         }
 
-        $data = $this->customers->load(
+        $data = $customers->load(
             $this->pageSize,
             $this->pageNum,
             $this->startDate,

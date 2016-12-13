@@ -1,27 +1,31 @@
 <?php
 namespace Glew\Service\Model\Types;
 
+use Glew\Service\Helper\Data;
+use Magento\Newsletter\Model\ResourceModel\Subscriber\CollectionFactory;
+use Glew\Service\Model\Types\SubscriberFactory;
+
 class Subscribers {
 
     public $subscribers = array();
     private $pageNum;
     protected $helper;
+    protected $collectionFactory;
     protected $subscriberFactory;
-    protected $objectManager;
 
     /**
      * @param \Glew\Service\Helper\Data $helper
-     * @param \Magento\Newsletter\Model\ResourceModel\Subscriber\CollectionFactory $subscriberFactory
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Magento\Newsletter\Model\ResourceModel\Subscriber\CollectionFactory $collectionFactory
+     * @param \Glew\Service\Model\Types\SubscriberFactory $subscriberFactory
      */
     public function __construct(
-        \Glew\Service\Helper\Data $helper,
-        \Magento\Newsletter\Model\ResourceModel\Subscriber\CollectionFactory $subscriberFactory,
-        \Magento\Framework\ObjectManagerInterface $objectManager
+        Data $helper,
+        CollectionFactory $collectionFactory,
+        SubscriberFactory $subscriberFactory
     ) {
         $this->helper = $helper;
+        $this->collectionFactory = $collectionFactory;
         $this->subscriberFactory = $subscriberFactory;
-        $this->objectManager = $objectManager;
     }
 
     public function load($pageSize, $pageNum, $sortDir, $filterBy, $id)
@@ -29,10 +33,10 @@ class Subscribers {
         $config = $this->helper->getConfig();
         $this->pageNum = $pageNum;
         if ($id) {
-            $subscribers = $this->subscriberFactory->create()
+            $subscribers = $this->collectionFactory->create()
                 ->addFieldToFilter('main_table.subscriber_id', $id);
         } else {
-            $subscribers = $this->subscriberFactory->create();
+            $subscribers = $this->collectionFactory->create();
         }
         $subscribers->addFilter('store_id', 'store_id = '.$this->helper->getStore()->getStoreId(), 'string');
         $subscribers->setOrder('subscriber_id', $sortDir);
@@ -43,10 +47,11 @@ class Subscribers {
             return $this;
         }
 
+        $model = $this->subscriberFactory->create();
         foreach ($subscribers as $subscriber) {
-            $model = $this->objectManager->create('\Glew\Service\Model\Types\Subscriber')->parse($subscriber);
-            if ($model) {
-                $this->subscribers[] = $model;
+            $glewSubscriber = $model->parse($subscriber);
+            if ($glewSubscriber) {
+                $this->subscribers[] = $glewSubscriber;
             }
         }
 

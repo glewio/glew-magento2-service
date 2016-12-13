@@ -1,29 +1,32 @@
 <?php
 namespace Glew\Service\Controller\Module;
 
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Glew\Service\Model\Types\OrdersFactory;
+use Glew\Service\Helper\Data;
+
 class Orders extends \Glew\Service\Controller\Module {
 
     protected $resultJsonFactory;
-    protected $orders;
+    protected $ordersFactory;
 
     /**
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Glew\Service\Model\Types\Orders $orders
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Glew\Service\Model\Types\OrdersFactory $ordersFactory
      * @param \Glew\Service\Helper\Data $helper
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Glew\Service\Model\Types\Orders $orders,
-        \Glew\Service\Helper\Data $helper
+        Context $context,
+        JsonFactory $resultJsonFactory,
+        OrdersFactory $ordersFactory,
+        Data $helper
     ) {
 
         $this->resultJsonFactory = $resultJsonFactory;
-        $this->orders = $orders;
+        $this->ordersFactory = $ordersFactory;
         $this->helper = $helper;
-        $this->objectManager = $context->getObjectManager();
         parent::__construct($context);
         parent::initParams();
 
@@ -35,6 +38,7 @@ class Orders extends \Glew\Service\Controller\Module {
     public function execute()
     {
         $result = $this->resultJsonFactory->create();
+        $orders = $this->ordersFactory->create();
 
         if($this->isAuthorized() != true || $this->isEnabled() != true) {
             $result->setHttpResponseCode(\Magento\Framework\App\Response\Http::STATUS_CODE_401);
@@ -42,7 +46,7 @@ class Orders extends \Glew\Service\Controller\Module {
             return $result;
         }
 
-        $data = $this->orders->load(
+        $data = $orders->load(
             $this->pageSize,
             $this->pageNum,
             $this->startDate,

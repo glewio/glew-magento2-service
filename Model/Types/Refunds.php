@@ -1,27 +1,31 @@
 <?php
 namespace Glew\Service\Model\Types;
 
+use Glew\Service\Helper\Data;
+use Magento\Sales\Model\ResourceModel\Order\Creditmemo\CollectionFactory;
+use Glew\Service\Model\Types\RefundFactory;
+
 class Refunds {
 
     public $refunds = array();
     protected $helper;
     protected $refundsCollection;
-    protected $objectManager;
+    protected $refundFactory;
     private $pageNum;
 
     /**
      * @param \Glew\Service\Helper\Data $helper
      * @param \Magento\Sales\Model\ResourceModel\Order\Creditmemo\CollectionFactory $refundsCollection
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Glew\Service\Model\Types\RefundFactory $refundFactory
      */
     public function __construct(
         \Glew\Service\Helper\Data $helper,
         \Magento\Sales\Model\ResourceModel\Order\Creditmemo\CollectionFactory $refundsCollection,
-        \Magento\Framework\ObjectManagerInterface $objectManager
+        \Glew\Service\Model\Types\RefundFactory $refundFactory
     ) {
         $this->helper = $helper;
         $this->refundsCollection = $refundsCollection;
-        $this->objectManager = $objectManager;
+        $this->refundFactory = $refundFactory;
     }
 
     public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id)
@@ -50,8 +54,9 @@ class Refunds {
             return $this;
         }
 
+        $glewRefund = $this->refundFactory->create();
         foreach ($refunds as $refund) {
-            $model = $this->objectManager->create('\Glew\Service\Model\Types\Refund')->parse($refund);
+            $model = $glewRefund->parse($refund);
             if ($model) {
                 $this->refunds[] = $model;
             }

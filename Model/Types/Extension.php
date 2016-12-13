@@ -3,9 +3,6 @@ namespace Glew\Service\Model\Types;
 
 class Extension {
 
-    /**
-     *
-     */
     public function __construct() {
         // nothing to inject
     }
