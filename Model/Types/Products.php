@@ -27,28 +27,28 @@ class Products {
         $this->pageNum = $pageNum;
         $this->_getProductAttribtues();
         if( $id ) {
-            $products = $this->productFactory->create()
+            $collection = $this->productFactory->create()
                 ->addAttributeToSelect('*')
                 ->addAttributeToFilter('entity_id', $id);
         } elseif ($startDate && $endDate) {
             $from = date('Y-m-d 00:00:00', strtotime($startDate));
             $to = date('Y-m-d 23:59:59', strtotime($endDate));
-            $products = $this->productFactory->create()
+            $collection = $this->productFactory->create()
                 ->addAttributeToSelect('*')
                 ->addAttributeToFilter($filterBy, array('from' => $from, 'to' => $to));
         } else {
-            $products = $this->productFactory->create()
+            $collection = $this->productFactory->create()
                 ->addAttributeToSelect('*');
         }
 
-        $products->setStore($this->helper->getStore());
-        $products->setOrder('updated_at', $sortDir);
-        $products->setCurPage($pageNum);
-        $products->setPageSize($pageSize);
-        if ($products->getLastPageNumber() < $pageNum) {
+        $collection->setStore($this->helper->getStore());
+        $collection->setOrder('updated_at', $sortDir);
+        $collection->setCurPage($pageNum);
+        $collection->setPageSize($pageSize);
+        if ($collection->getLastPageNumber() < $pageNum) {
             return $this;
         }
-        foreach ($products as $product) {
+        foreach ($collection as $product) {
             $productId = $product->getId();
             $model = $this->objectManager->create('\Glew\Service\Model\Types\Product')->parse($productId, $this->productAttributes);
             if ($model) {

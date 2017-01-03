@@ -54,8 +54,8 @@ class Refunds {
             return $this;
         }
 
-        $glewRefund = $this->refundFactory->create();
         foreach ($refunds as $refund) {
+            $glewRefund = $this->refundFactory->create();
             $model = $glewRefund->parse($refund);
             if ($model) {
                 $this->refunds[] = $model;

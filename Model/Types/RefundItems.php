@@ -60,8 +60,8 @@ class RefundItems {
             return $this;
         }
 
-        $refundItem = $this->refundItemFactory->create();
         foreach ($refunds as $refund) {
+            $refundItem = $this->refundItemFactory->create();
             $model = $refundItem->parse($refund);
             if ($model) {
                 $this->refundItems[] = $model;

@@ -51,8 +51,8 @@ class ProductAlerts {
             return $this;
         }
 
-        $productAlert = $this->productAlertFactory->create();
         foreach ($alerts as $alert) {
+            $productAlert = $this->productAlertFactory->create();
             $model = $productAlert->parse($alert);
             if ($model) {
                 $this->alerts[] = $model;

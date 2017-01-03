@@ -47,8 +47,8 @@ class Subscribers {
             return $this;
         }
 
-        $model = $this->subscriberFactory->create();
         foreach ($subscribers as $subscriber) {
+            $model = $this->subscriberFactory->create();
             $glewSubscriber = $model->parse($subscriber);
             if ($glewSubscriber) {
                 $this->subscribers[] = $glewSubscriber;

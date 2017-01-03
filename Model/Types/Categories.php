@@ -30,7 +30,6 @@ class Categories {
 
     public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id)
     {
-        $category = $this->categoryFactory->create();
         $config = $this->helper->getConfig();
         $this->pageNum = $pageNum;
 
@@ -56,6 +55,7 @@ class Categories {
         }
 
         foreach ($categories as $cat) {
+            $category = $this->categoryFactory->create();
             $model = $category->parse($cat);
             if ($model) {
                 $this->categories[] = $model;

@@ -30,7 +30,6 @@ class AbandonedCarts
 
     public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id)
     {
-        $abandonedCarts = $this->abandonedCartFactory->create();
         $config = $this->helper->getConfig();
         $this->pageNum = $pageNum;
         if($id) {
@@ -62,6 +61,7 @@ class AbandonedCarts
 
         foreach ($collection as $cart) {
             if ($cart) {
+                $abandonedCarts = $this->abandonedCartFactory->create();
                 $model = $abandonedCarts->parse($cart);
                 if ($model) {
                     $this->carts[] = $model;

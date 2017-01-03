@@ -31,8 +31,8 @@ class Stores {
         $stores = $this->helper->getStores();
         $stores = $this->helper->paginate($stores, $pageNum, $pageSize);
 
-        $glewStore = $this->storeFactory->create();
         foreach($stores as $store) {
+            $glewStore = $this->storeFactory->create();
             $storeModel = $glewStore->parse($store);
             if ($storeModel) {
                 $this->stores[] = $storeModel;
