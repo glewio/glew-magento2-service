@@ -39,10 +39,10 @@ class AbandonedCarts
             $filter = array(
                 'datetime' => 1,
                 'locale' => 'en_US',
-                'from' => new Zend_Date(strtotime($startDate), Zend_Date::TIMESTAMP),
-                'to' => new Zend_Date(strtotime($endDate . ' + 1 day -1 second'), Zend_Date::TIMESTAMP),
+                'from' => date('Y-m-d 00:00:00', strtotime($startDate)),
+                'to' => date('Y-m-d 23:59:59', strtotime($endDate)),
             );
-
+            
             $collection = $this->cartCollection
                 ->addFieldToFilter('main_table.'.$filterBy, $filter);
         } else {
