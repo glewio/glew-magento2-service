@@ -49,7 +49,7 @@ class OrderItems {
         $catProdEntDecTable = $this->resource->getTableName('catalog_product_entity_decimal');
         $collection->getSelect()->joinLeft(
             array('cost' => $catProdEntDecTable),
-            "main_table.product_id = cost.entity_id AND cost.attribute_id = {$attribute->getId()} AND cost.store_id = {$store->getStoreId()}",
+            "main_table.product_id = cost.row_id AND cost.attribute_id = {$attribute->getId()} AND cost.store_id = {$store->getStoreId()}",
             array('cost' => 'value')
         );
         $collection->setOrder('created_at', $sortDir);
