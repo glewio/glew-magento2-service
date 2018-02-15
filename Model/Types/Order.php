@@ -40,13 +40,22 @@ class Order {
         $this->shipping_tax = round($order->getShippingTaxAmount(), 2);
         $this->shipping_description = $order->getShippingDescription();
         try {
-            $this->payment_method = $order->getPayment()->getMethodInstance()->getTitle();
-        } catch (Exception $e) {
+            $payment = $order->getPayment();
+            if ($payment) {
+                $this->payment_method = $payment->getMethodInstance()->getTitle();
+            } else {
+                $this->payment_method = '';
+            }
+        } catch (\Exception $e) {
             $this->payment_method = '';
         }
-        $this->discount_amount = round($order->getDiscountAmount(), 2);
-        $this->discount_description = $order->getDiscountDescription();
-        $this->discount_code = $order->getCouponCode();
+
+        try {
+            $this->discount_amount = round($order->getDiscountAmount(), 2);
+            $this->discount_description = $order->getDiscountDescription();
+            $this->discount_code = $order->getCouponCode();
+        } catch (\Exception $e) {}
+
         $this->weight = $order->getWeight();
         $this->remote_ip = $order->getRemoteIp();
         $this->store = $order->getStore()->getCode();

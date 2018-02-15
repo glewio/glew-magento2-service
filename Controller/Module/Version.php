@@ -48,6 +48,8 @@ class Version extends \Glew\Service\Controller\Module {
         $data->phpVersion = (string) phpversion();
         $data->moduleEnabled = $this->helper->getConfig()['enabled'];
         $data->apiVersion = "2.0";
+        $data->memoryLimit = @ini_get('memory_limit');
+        $data->maxExecutionTime = @ini_get('max_execution_time');
         return $result->setData($data);
     }
 }
