@@ -46,6 +46,7 @@ class Order {
         }
         $this->discount_amount = round($order->getDiscountAmount(), 2);
         $this->discount_description = $order->getDiscountDescription();
+        $this->discount_code = $order->getCouponCode();
         $this->weight = $order->getWeight();
         $this->remote_ip = $order->getRemoteIp();
         $this->store = $order->getStore()->getCode();
