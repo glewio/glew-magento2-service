@@ -8,6 +8,7 @@ class OrderItems {
     protected $objectManager;
     protected $eavConfig;
     protected $resource;
+    protected $productMetadata;
     /**
      * @param \Glew\Service\Helper\Data $helper
      * @param \Magento\Sales\Model\ResourceModel\Order\Item\CollectionFactory $orderItemsFactory
@@ -20,18 +21,21 @@ class OrderItems {
         \Magento\Sales\Model\ResourceModel\Order\Item\CollectionFactory $orderItemsFactory,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Magento\Eav\Model\Config $eavConfig,
-        \Magento\Framework\App\ResourceConnection $resource
+        \Magento\Framework\App\ResourceConnection $resource,
+        \Magento\Framework\App\ProductMetadataInterface $productMetadata
     ) {
         $this->helper = $helper;
         $this->orderItemsFactory = $orderItemsFactory;
         $this->objectManager = $objectManager;
         $this->eavConfig = $eavConfig;
         $this->resource = $resource;
+        $this->productMetadata = $productMetadata;
     }
     public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id)
     {
         $config = $this->helper->getConfig();
         $store = $this->helper->getStore();
+        $edition = $this->productMetadata->getEdition();
         $this->pageNum = $pageNum;
         $attribute = $this->eavConfig->getAttribute(\Magento\Catalog\Model\Product::ENTITY, 'cost');
         if ($id) {
