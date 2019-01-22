@@ -29,7 +29,8 @@ class Products {
         if( $id ) {
             $collection = $this->productFactory->create()
                 ->addAttributeToSelect('*')
-                ->addAttributeToFilter('entity_id', $id);
+                ->addAttributeToFilter('entity_id', $id)
+                ->setFlag('has_stock_status_filter', true);
         } elseif ($startDate && $endDate) {
             $from = date('Y-m-d 00:00:00', strtotime($startDate));
             $to = date('Y-m-d 23:59:59', strtotime($endDate));
