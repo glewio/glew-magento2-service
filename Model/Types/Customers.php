@@ -45,6 +45,7 @@ class Customers {
         if ($collection->getLastPageNumber() < $pageNum) {
             return $this;
         }
+        
         foreach ($collection as $customer) {
             $mageCustomer = $this->objectManager->create('\Magento\Customer\Model\Customer');
             $customer = $mageCustomer->load($customer->getId());
