@@ -54,9 +54,9 @@ class Categories {
             return $this;
         }
 
-        $category = $this->categoryFactory->create();
+        
         foreach ($categories as $cat) {
-            
+            $category = $this->categoryFactory->create();    
             $model = $category->parse($cat);
             if ($model) {
                 $this->categories[] = $model;

@@ -45,11 +45,11 @@ class Customers {
         if ($collection->getLastPageNumber() < $pageNum) {
             return $this;
         }
-        $mageCustomer = $this->objectManager->create('\Magento\Customer\Model\Customer');
-        $customerParser = $this->objectManager->create('\Glew\Service\Model\Types\Customer');
         foreach ($collection as $customer) {
+            $mageCustomer = $this->objectManager->create('\Magento\Customer\Model\Customer');
             $customer = $mageCustomer->load($customer->getId());
             if ($customer && $customer->getId()) {
+                $customerParser = $this->objectManager->create('\Glew\Service\Model\Types\Customer');
                 $model = $customerParser->parse($customer);
                 if ($model) {
                     $this->customers[] = $model;

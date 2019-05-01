@@ -43,7 +43,7 @@ class Products {
         }
 
         $collection->setStore($this->helper->getStore());
-        $collection->setOrder('updated_at', $sortDir);
+        $collection->setOrder('entity_id', $sortDir);
         $collection->setCurPage($pageNum);
         $collection->setPageSize($pageSize);
         if ($collection->getLastPageNumber() < $pageNum) {
