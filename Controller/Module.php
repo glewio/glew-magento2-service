@@ -10,6 +10,7 @@ abstract class Module extends \Magento\Framework\App\Action\Action {
     protected $sortDir = 'asc';
     protected $filterField = 'created_at';
     protected $id = null;
+    protected $customAttr = null;
     protected $helper;
 
     protected function initParams() {
@@ -40,6 +41,9 @@ abstract class Module extends \Magento\Framework\App\Action\Action {
         }
         if ((bool) $id = $this->getRequest()->getParam('id')) {
             $this->id = $id;
+        }
+        if ((bool) $customAttr = $this->getRequest()->getParam('customAttr')) {
+            $this->customAttr = $customAttr;
         }
     }
 

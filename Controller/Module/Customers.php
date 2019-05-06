@@ -53,7 +53,8 @@ class Customers extends \Glew\Service\Controller\Module {
             $this->endDate,
             $this->sortDir,
             $this->filterField,
-            $this->id
+            $this->id,
+            $this->customAttr
         );
         return $result->setData(['customers' => $data]);
     }

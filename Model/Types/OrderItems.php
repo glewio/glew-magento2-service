@@ -31,11 +31,12 @@ class OrderItems {
         $this->resource = $resource;
         $this->productMetadata = $productMetadata;
     }
-    public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id)
+    public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id, $customAttr)
     {
         $config = $this->helper->getConfig();
         $store = $this->helper->getStore();
         $edition = $this->productMetadata->getEdition();
+        // return $edition;
         $this->pageNum = $pageNum;
         $attribute = $this->eavConfig->getAttribute(\Magento\Catalog\Model\Product::ENTITY, 'cost');
         if ($id) {
@@ -70,9 +71,12 @@ class OrderItems {
         if ($collection->getLastPageNumber() < $pageNum) {
             return $this;
         }
+        $connection = $this->resource->getConnection();
+        $tableName = $this->resource->getTableName('sales_order_item');
         foreach ($collection as $orderItem) {
             $continue = true;
-            if ($orderItem && $orderItem->getId()) {
+            $orderItemId = $orderItem->getId();
+            if ($orderItem && $orderItemId) {
                 if ($orderItem->getParentItemId()) {
                     foreach ($this->orderItems as $key => $oi) {
                         if ($orderItem->getParentItemId() == $this->orderItems[$key]->order_item_id) {
@@ -86,6 +90,10 @@ class OrderItems {
                 }
                 $model = $this->objectManager->create('\Glew\Service\Model\Types\OrderItem')->parse($orderItem);
                 if ($model) {
+                    if ($customAttr) {
+                        $sql = "SELECT project_name FROM " . $tableName . " WHERE item_id = " . $orderItemId;
+                        $model->project_name = $connection->fetchOne($sql);
+                    }
                     $this->orderItems[] = $model;
                 }
             }

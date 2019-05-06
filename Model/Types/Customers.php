@@ -24,7 +24,7 @@ class Customers {
         $this->mageCustomer = $mageCustomer;
         $this->objectManager = $objectManager;
     }
-    public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id) {
+    public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id, $customAttr) {
         $config = $this->helper->getConfig();
         $this->pageNum = $pageNum;
         if ($id) {
@@ -45,14 +45,15 @@ class Customers {
         if ($collection->getLastPageNumber() < $pageNum) {
             return $this;
         }
-        
         foreach ($collection as $customer) {
             $mageCustomer = $this->objectManager->create('\Magento\Customer\Model\Customer');
-            $customer = $mageCustomer->load($customer->getId());
-            if ($customer && $customer->getId()) {
+            $customerId = $customer->getId();
+            $customer = $mageCustomer->load($customerId);
+            if ($customer && $customerId) {
                 $customerParser = $this->objectManager->create('\Glew\Service\Model\Types\Customer');
                 $model = $customerParser->parse($customer);
                 if ($model) {
+                    if ($customAttr) $model->company = $customer->getDefaultBillingAddress()->getCompany();
                     $this->customers[] = $model;
                 }
             }

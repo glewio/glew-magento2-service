@@ -6,22 +6,26 @@ class Products {
     protected $productFactory;
     protected $objectManager;
     private $pageNum;
+    protected $resource;
     private $productAttributes = array();
     /**
      * @param \Glew\Service\Helper\Data $helper
      * @param \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productFactory
      * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Magento\Framework\App\ResourceConnection $resource
      */
     public function __construct(
         \Glew\Service\Helper\Data $helper,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productFactory,
-        \Magento\Framework\ObjectManagerInterface $objectManager
+        \Magento\Framework\ObjectManagerInterface $objectManager,
+        \Magento\Framework\App\ResourceConnection $resource
     ) {
         $this->helper = $helper;
         $this->productFactory = $productFactory;
         $this->objectManager = $objectManager;
+        $this->resource = $resource;
     }
-    public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id)
+    public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id, $customAttr)
     {
         $config = $this->helper->getConfig();
         $this->pageNum = $pageNum;
@@ -43,16 +47,23 @@ class Products {
         }
 
         $collection->setStore($this->helper->getStore());
-        $collection->setOrder('entity_id', $sortDir);
+        $collection->setOrder('entity_id', 'asc');
         $collection->setCurPage($pageNum);
         $collection->setPageSize($pageSize);
         if ($collection->getLastPageNumber() < $pageNum) {
             return $this;
         }
+        $connection = $this->resource->getConnection();
+        $catalogProductEntityTableName = $this->resource->getTableName('catalog_product_entity');
+        $catalogProductEntityVarcharTableName = $this->resource->getTableName('catalog_product_entity_varchar');
         foreach ($collection as $product) {
             $productId = $product->getId();
             $model = $this->objectManager->create('\Glew\Service\Model\Types\Product')->parse($productId, $this->productAttributes);
             if ($model) {
+                if ($customAttr) {
+                    $sql = "SELECT color.value FROM " . $catalogProductEntityVarcharTableName . " AS color WHERE color.attribute_id = 260 AND color.row_id = " . $productId;
+                    $model->sku_color = $connection->fetchOne($sql);
+                }
                 $model->cross_sell_products = $this->_getCrossSellProducts($product);
                 $model->up_sell_products = $this->_getUpSellProducts($product);
                 $model->related_products = $this->_getRelatedProducts($product);
