@@ -28,8 +28,6 @@ class Customer {
 
     public function parse($customer) {
 
-        $addressParser = $this->addressFactory->create();
-
         if (!$customer) {
             return $this;
         }
@@ -50,6 +48,7 @@ class Customer {
         $this->store = ((bool) $customer->getStore()->getCode()) ? $customer->getStore()->getCode() : '';
         $this->addresses = array();
 
+        $addressParser = $this->addressFactory->create();
         if ($customer->getDefaultShippingAddress()) {
             $address = $addressParser->parse($customer->getDefaultShippingAddress());
             if ($address) {
