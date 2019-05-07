@@ -54,7 +54,6 @@ class Products {
             return $this;
         }
         $connection = $this->resource->getConnection();
-        $catalogProductEntityTableName = $this->resource->getTableName('catalog_product_entity');
         $catalogProductEntityVarcharTableName = $this->resource->getTableName('catalog_product_entity_varchar');
         foreach ($collection as $product) {
             $productId = $product->getId();

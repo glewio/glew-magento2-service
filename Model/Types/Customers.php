@@ -47,7 +47,7 @@ class Customers {
             if ($customer && $customerId) {
                 $model = $this->objectManager->create('\Glew\Service\Model\Types\Customer')->parse($customer);
                 if ($model) {
-                    if ($customAttr) $model->company = $customer->getDefaultBillingAddress()->getCompany();
+                    if ($customAttr) $model->design_firm = $customer->getDefaultBillingAddress()->getCompany();
                     $this->customers[] = $model;
                 }
             }
