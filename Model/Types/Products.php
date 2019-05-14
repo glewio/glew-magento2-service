@@ -25,7 +25,7 @@ class Products {
         $this->objectManager = $objectManager;
         $this->resource = $resource;
     }
-    public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id, $customAttr)
+    public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id)
     {
         $config = $this->helper->getConfig();
         $this->pageNum = $pageNum;
@@ -53,16 +53,10 @@ class Products {
         if ($collection->getLastPageNumber() < $pageNum) {
             return $this;
         }
-        $connection = $this->resource->getConnection();
-        $catalogProductEntityVarcharTableName = $this->resource->getTableName('catalog_product_entity_varchar');
         foreach ($collection as $product) {
             $productId = $product->getId();
             $model = $this->objectManager->create('\Glew\Service\Model\Types\Product')->parse($productId, $this->productAttributes);
             if ($model) {
-                if ($customAttr) {
-                    $sql = "SELECT color.value FROM " . $catalogProductEntityVarcharTableName . " AS color WHERE color.attribute_id = 260 AND color.row_id = " . $productId;
-                    $model->sku_color = $connection->fetchOne($sql);
-                }
                 $model->cross_sell_products = $this->_getCrossSellProducts($product);
                 $model->up_sell_products = $this->_getUpSellProducts($product);
                 $model->related_products = $this->_getRelatedProducts($product);

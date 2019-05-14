@@ -20,7 +20,7 @@ class Customers {
         $this->customerFactory = $customerFactory;
         $this->objectManager = $objectManager;
     }
-    public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id, $customAttr) {
+    public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id) {
         $config = $this->helper->getConfig();
         $this->pageNum = $pageNum;
         if ($id) {
@@ -47,7 +47,6 @@ class Customers {
             if ($customer && $customerId) {
                 $model = $this->objectManager->create('\Glew\Service\Model\Types\Customer')->parse($customer);
                 if ($model) {
-                    if ($customAttr) $model->design_firm = $customer->getDefaultBillingAddress()->getCompany();
                     $this->customers[] = $model;
                 }
             }

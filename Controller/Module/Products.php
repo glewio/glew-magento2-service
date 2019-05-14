@@ -53,8 +53,7 @@ class Products extends \Glew\Service\Controller\Module {
             $this->endDate,
             $this->sortDir,
             $this->filterField,
-            $this->id,
-            $this->customAttr
+            $this->id
         );
 
         return $result->setData(['products' => $data]);
