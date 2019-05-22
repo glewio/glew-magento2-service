@@ -6,8 +6,8 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Glew\Service\Model\Types\InventoryFactory;
 use Glew\Service\Helper\Data;
 
-class Inventory extends \Glew\Service\Controller\Module {
-
+class Inventory extends \Glew\Service\Controller\Module
+{
     protected $resultJsonFactory;
     protected $inventoryFactory;
 
@@ -23,13 +23,11 @@ class Inventory extends \Glew\Service\Controller\Module {
         InventoryFactory $inventoryFactory,
         Data $helper
     ) {
-
         $this->resultJsonFactory = $resultJsonFactory;
         $this->inventoryFactory = $inventoryFactory;
         $this->helper = $helper;
         parent::__construct($context);
         parent::initParams();
-
     }
 
     /**
@@ -40,7 +38,7 @@ class Inventory extends \Glew\Service\Controller\Module {
         $result = $this->resultJsonFactory->create();
         $inventory = $this->inventoryFactory->create();
 
-        if($this->isAuthorized() != true || $this->isEnabled() != true) {
+        if ($this->isAuthorized() != true || $this->isEnabled() != true) {
             $result->setHttpResponseCode(\Magento\Framework\App\Response\Http::STATUS_CODE_401);
             $result->setData(['error' => 'Invalid security token or module disabled']);
             return $result;

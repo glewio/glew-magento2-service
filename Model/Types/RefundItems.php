@@ -6,8 +6,8 @@ use Magento\Sales\Model\ResourceModel\Order\Creditmemo\CollectionFactory;
 use Glew\Service\Model\Types\RefundItemFactory;
 use Magento\Framework\App\ResourceConnection;
 
-class RefundItems {
-
+class RefundItems
+{
     public $refundItems = array();
     protected $helper;
     protected $refundsCollection;
@@ -49,7 +49,7 @@ class RefundItems {
         }
         $refunds->addAttributeToFilter('main_table.store_id', $this->helper->getStore()->getStoreId());
         $refunds->getSelect()->join(array('credit_item' => $salesFlatCredMemItem), 'credit_item.parent_id = main_table.entity_id', array('*'));
-        if ($id ) {
+        if ($id) {
             $refunds->addAttributeToFilter('credit_item.entity_id', $id);
         }
         $refunds->setOrder('created_at', $sortDir);

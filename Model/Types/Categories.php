@@ -5,8 +5,8 @@ use Glew\Service\Helper\Data;
 use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory;
 use Glew\Service\Model\Types\CategoryFactory;
 
-class Categories {
-
+class Categories
+{
     public $categories = array();
     protected $helper;
     protected $categoryCollection;
@@ -14,9 +14,9 @@ class Categories {
     private $pageNum;
 
     /**
-     * @param \Glew\Service\Helper\Data $helper
-     * @param \Magento\Catalog\Model\Resource\Category\CollectionFactory $categoryCollection
-     * @param \Glew\Service\Model\Types\CategoryFactory $categoryFactory
+     * @param \Glew\Service\Helper\Data                                       $helper
+     * @param \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory $categoryCollection
+     * @param \Glew\Service\Model\Types\CategoryFactory                       $categoryFactory
      */
     public function __construct(
         Data $helper,

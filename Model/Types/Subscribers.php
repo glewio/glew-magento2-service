@@ -5,8 +5,8 @@ use Glew\Service\Helper\Data;
 use Magento\Newsletter\Model\ResourceModel\Subscriber\CollectionFactory;
 use Glew\Service\Model\Types\SubscriberFactory;
 
-class Subscribers {
-
+class Subscribers
+{
     public $subscribers = array();
     private $pageNum;
     protected $helper;

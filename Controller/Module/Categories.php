@@ -6,8 +6,8 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Glew\Service\Model\Types\CategoriesFactory;
 use Glew\Service\Helper\Data;
 
-class Categories extends \Glew\Service\Controller\Module {
-
+class Categories extends \Glew\Service\Controller\Module
+{
     protected $resultJsonFactory;
     protected $categoriesFactory;
 
@@ -23,13 +23,11 @@ class Categories extends \Glew\Service\Controller\Module {
         CategoriesFactory $categoriesFactory,
         Data $helper
     ) {
-
         $this->resultJsonFactory = $resultJsonFactory;
         $this->categoriesFactory = $categoriesFactory;
         $this->helper = $helper;
         parent::__construct($context);
         parent::initParams();
-
     }
 
     /**
@@ -40,7 +38,7 @@ class Categories extends \Glew\Service\Controller\Module {
         $result = $this->resultJsonFactory->create();
         $categories = $this->categoriesFactory->create();
 
-        if($this->isAuthorized() != true || $this->isEnabled() != true) {
+        if ($this->isAuthorized() != true || $this->isEnabled() != true) {
             $result->setHttpResponseCode(\Magento\Framework\App\Response\Http::STATUS_CODE_401);
             $result->setData(['error' => 'Invalid security token or module disabled']);
             return $result;

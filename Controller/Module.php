@@ -1,18 +1,19 @@
 <?php
 namespace Glew\Service\Controller;
 
-abstract class Module extends \Magento\Framework\App\Action\Action {
-
-    protected $pageSize = null;
+abstract class Module extends \Magento\Framework\App\Action\Action
+{
+    protected $pageSize;
     protected $pageNum = 0;
-    protected $startDate = null;
-    protected $endDate = null;
+    protected $startDate;
+    protected $endDate;
     protected $sortDir = 'asc';
     protected $filterField = 'created_at';
-    protected $id = null;
+    protected $id;
     protected $helper;
 
-    protected function initParams() {
+    protected function initParams()
+    {
         if ((bool) $pageSize = $this->getRequest()->getParam('page_size')) {
             $this->pageSize = $pageSize;
         }
@@ -43,12 +44,13 @@ abstract class Module extends \Magento\Framework\App\Action\Action {
         }
     }
 
-    protected function isEnabled() {
+    protected function isEnabled()
+    {
         return $this->helper->getConfig()['enabled'];
     }
 
-    protected function isAuthorized() {
-
+    protected function isAuthorized()
+    {
         $token = $this->helper->getConfig()['security_token'];
         $authToken = (isset($_SERVER['HTTP_X_GLEW_TOKEN']) ? $_SERVER['HTTP_X_GLEW_TOKEN'] : $_SERVER['X_GLEW_TOKEN']);
 

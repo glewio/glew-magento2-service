@@ -6,8 +6,8 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Glew\Service\Model\Types\RefundsFactory;
 use Glew\Service\Helper\Data;
 
-class Refunds extends \Glew\Service\Controller\Module {
-
+class Refunds extends \Glew\Service\Controller\Module
+{
     protected $resultJsonFactory;
     protected $refundsFactory;
 
@@ -23,13 +23,11 @@ class Refunds extends \Glew\Service\Controller\Module {
         RefundsFactory $refundsFactory,
         Data $helper
     ) {
-
         $this->resultJsonFactory = $resultJsonFactory;
         $this->refundsFactory = $refundsFactory;
         $this->helper = $helper;
         parent::__construct($context);
         parent::initParams();
-
     }
 
     /**
@@ -40,7 +38,7 @@ class Refunds extends \Glew\Service\Controller\Module {
         $result = $this->resultJsonFactory->create();
         $refunds = $this->refundsFactory->create();
 
-        if($this->isAuthorized() != true || $this->isEnabled() != true) {
+        if ($this->isAuthorized() != true || $this->isEnabled() != true) {
             $result->setHttpResponseCode(\Magento\Framework\App\Response\Http::STATUS_CODE_401);
             $result->setData(['error' => 'Invalid security token or module disabled']);
             return $result;

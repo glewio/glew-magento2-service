@@ -1,6 +1,8 @@
 <?php
 namespace Glew\Service\Model\Types;
-class Products {
+
+class Products
+{
     public $products = array();
     protected $helper;
     protected $productFactory;
@@ -26,7 +28,7 @@ class Products {
         $config = $this->helper->getConfig();
         $this->pageNum = $pageNum;
         $this->_getProductAttribtues();
-        if( $id ) {
+        if ($id) {
             $collection = $this->productFactory->create()
                 ->addAttributeToSelect('*')
                 ->addAttributeToFilter('entity_id', $id)

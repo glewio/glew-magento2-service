@@ -1,6 +1,8 @@
 <?php
 namespace Glew\Service\Model\Types;
-class Inventory {
+
+class Inventory
+{
     public $inventory = array();
     private $pageNum;
     protected $helper;
@@ -28,7 +30,7 @@ class Inventory {
     {
         $config = $this->helper->getConfig();
         $this->pageNum = $pageNum;
-        if($id) {
+        if ($id) {
             $inventory = $this->productFactory->create()
                 ->addAttributeToSelect('*')
                 ->addAttributeToFilter('entity_id', $id);

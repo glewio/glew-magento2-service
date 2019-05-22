@@ -1,12 +1,14 @@
 <?php
 namespace Glew\Service\Model\Types;
 
-class Category {
-
+class Category
+{
     protected $category;
 
     /**
      * \Magento\Catalog\Model\Category $category
+     *
+     * @param \Magento\Catalog\Model\Category $category
      */
     public function __construct(
         \Magento\Catalog\Model\Category $category
@@ -14,8 +16,8 @@ class Category {
         $this->category = $category;
     }
 
-    public function parse($cat) {
-
+    public function parse($cat)
+    {
         $category = $this->category->load($cat->getId());
 
         $this->category_id = $category->getId();

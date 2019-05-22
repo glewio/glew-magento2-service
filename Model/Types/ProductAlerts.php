@@ -5,8 +5,8 @@ use Glew\Service\Helper\Data;
 use Magento\ProductAlert\Model\ResourceModel\Stock\CollectionFactory;
 use Glew\Service\Model\Types\ProductAlertFactory;
 
-class ProductAlerts {
-
+class ProductAlerts
+{
     public $alerts = array();
     protected $helper;
     protected $productAlertCollection;

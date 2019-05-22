@@ -4,8 +4,8 @@ namespace Glew\Service\Model\Types;
 use Glew\Service\Helper\Data;
 use Magento\Directory\Model\Region;
 
-class Address {
-
+class Address
+{
     const BILLING_ADDRESS_TYPE = 1;
     const SHIPPING_ADDRESS_TYPE = 2;
     public $address_id;

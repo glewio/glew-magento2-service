@@ -6,8 +6,8 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Glew\Service\Model\Types\OrdersFactory;
 use Glew\Service\Helper\Data;
 
-class Orders extends \Glew\Service\Controller\Module {
-
+class Orders extends \Glew\Service\Controller\Module
+{
     protected $resultJsonFactory;
     protected $ordersFactory;
 
@@ -23,13 +23,11 @@ class Orders extends \Glew\Service\Controller\Module {
         OrdersFactory $ordersFactory,
         Data $helper
     ) {
-
         $this->resultJsonFactory = $resultJsonFactory;
         $this->ordersFactory = $ordersFactory;
         $this->helper = $helper;
         parent::__construct($context);
         parent::initParams();
-
     }
 
     /**
@@ -40,7 +38,7 @@ class Orders extends \Glew\Service\Controller\Module {
         $result = $this->resultJsonFactory->create();
         $orders = $this->ordersFactory->create();
 
-        if($this->isAuthorized() != true || $this->isEnabled() != true) {
+        if ($this->isAuthorized() != true || $this->isEnabled() != true) {
             $result->setHttpResponseCode(\Magento\Framework\App\Response\Http::STATUS_CODE_401);
             $result->setData(['error' => 'Invalid security token or module disabled']);
             return $result;

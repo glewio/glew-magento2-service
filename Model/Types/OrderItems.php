@@ -1,6 +1,8 @@
 <?php
 namespace Glew\Service\Model\Types;
-class OrderItems {
+
+class OrderItems
+{
     public $orderItems = array();
     private $pageNum;
     protected $helper;
@@ -9,12 +11,14 @@ class OrderItems {
     protected $eavConfig;
     protected $resource;
     protected $productMetadata;
+
     /**
-     * @param \Glew\Service\Helper\Data $helper
+     * @param \Glew\Service\Helper\Data                                       $helper
      * @param \Magento\Sales\Model\ResourceModel\Order\Item\CollectionFactory $orderItemsFactory
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
-     * @param \Magento\Eav\Model\Config $eavConfig
-     * @param \Magento\Framework\App\ResourceConnection $resource
+     * @param \Magento\Framework\ObjectManagerInterface                       $objectManager
+     * @param \Magento\Eav\Model\Config                                       $eavConfig
+     * @param \Magento\Framework\App\ResourceConnection                       $resource
+     * @param \Magento\Framework\App\ProductMetadataInterface                 $productMetadata
      */
     public function __construct(
         \Glew\Service\Helper\Data $helper,
@@ -51,14 +55,14 @@ class OrderItems {
         }
         $collection->addAttributeToFilter('main_table.store_id', $this->helper->getStore()->getStoreId());
         $catProdEntDecTable = $this->resource->getTableName('catalog_product_entity_decimal');
-        if($edition === 'Community') {
-          $collection->getSelect()->joinLeft(
+        if ($edition === 'Community') {
+            $collection->getSelect()->joinLeft(
               array('cost' => $catProdEntDecTable),
               "main_table.product_id = cost.entity_id AND cost.attribute_id = {$attribute->getId()} AND cost.store_id = {$store->getStoreId()}",
               array('cost' => 'value')
           );
         } else {
-          $collection->getSelect()->joinLeft(
+            $collection->getSelect()->joinLeft(
               array('cost' => $catProdEntDecTable),
               "main_table.product_id = cost.row_id AND cost.attribute_id = {$attribute->getId()} AND cost.store_id = {$store->getStoreId()}",
               array('cost' => 'value')
