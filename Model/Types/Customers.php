@@ -1,6 +1,8 @@
 <?php
 namespace Glew\Service\Model\Types;
-class Customers {
+
+class Customers
+{
     public $customers = array();
     private $pageNum;
     protected $helper;
@@ -24,7 +26,8 @@ class Customers {
         $this->mageCustomer = $mageCustomer;
         $this->objectManager = $objectManager;
     }
-    public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id) {
+    public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id)
+    {
         $config = $this->helper->getConfig();
         $this->pageNum = $pageNum;
         if ($id) {

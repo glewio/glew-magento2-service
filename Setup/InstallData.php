@@ -7,8 +7,8 @@ use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\UrlRewrite\Model\UrlRewrite;
 use Magento\Store\Model\StoreManagerInterface;
 
-class InstallData implements InstallDataInterface {
-
+class InstallData implements InstallDataInterface
+{
     protected $urlRewrite;
 
     public static $fields = [
@@ -26,11 +26,10 @@ class InstallData implements InstallDataInterface {
 
     public static $table = 'url_rewrite';
 
-    public function __construct(UrlRewrite $urlRewrite, StoreManagerInterface $storeManager) {
-
+    public function __construct(UrlRewrite $urlRewrite, StoreManagerInterface $storeManager)
+    {
         $this->urlRewrite = $urlRewrite;
         $this->storeManager = $storeManager;
-
     }
 
     /**
@@ -41,23 +40,20 @@ class InstallData implements InstallDataInterface {
         ModuleDataSetupInterface $setup,
         ModuleContextInterface $context
     ) {
-
-        $hostname = version_compare(phpversion(), '5.3', '>=') ? gethostname() : php_uname('n');
+        $hostname = version_compare(PHP_VERSION, '5.3', '>=') ? gethostname() : php_uname('n');
         $prefix = md5($hostname);
-        $token = sha1(uniqid($prefix, true).rand().microtime());
+        $token = sha1(uniqid($prefix, true).mt_rand().microtime());
         $data[] = array('path' => 'glew_settings/general/security_token', 'value' => $token);
         $data[] = array('path' => 'glew_settings/general/enabled', 'value' => '1');
         $setup->getConnection()->insertArray($setup->getTable('core_config_data'), ['path', 'value'], $data);
 
-        if(!$this->urlRewrite->getCollection()->getItemByColumnValue('request_path', 'glew/module/abandoned_carts')) {
-
+        if (!$this->urlRewrite->getCollection()->getItemByColumnValue('request_path', 'glew/module/abandoned_carts')) {
             $urls[] = array(null, 'custom', 0, 'glew/module/abandoned_carts', 'glew/module/abandonedcarts', 0, $this->storeManager->getStore()->getId(), null, 0, null);
             $urls[] = array(null, 'custom', 0, 'glew/module/newsletter_subscribers', 'glew/module/newslettersubscribers', 0, $this->storeManager->getStore()->getId(), null, 0, null);
             $urls[] = array(null, 'custom', 0, 'glew/module/order_items', 'glew/module/orderitems', 0, $this->storeManager->getStore()->getId(), null, 0, null);
             $urls[] = array(null, 'custom', 0, 'glew/module/product_alerts', 'glew/module/productalerts', 0, $this->storeManager->getStore()->getId(), null, 0, null);
             $urls[] = array(null, 'custom', 0, 'glew/module/refund_items', 'glew/module/refunditems', 0, $this->storeManager->getStore()->getId(), null, 0, null);
             $setup->getConnection()->insertArray($setup->getTable(self::$table), self::$fields, $urls);
-
         }
     }
 }

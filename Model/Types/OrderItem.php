@@ -1,6 +1,8 @@
 <?php
 namespace Glew\Service\Model\Types;
-class OrderItem {
+
+class OrderItem
+{
     protected $helper;
     protected $objectManager;
     /**
@@ -14,7 +16,8 @@ class OrderItem {
         $this->helper = $helper;
         $this->objectManager = $objectManager;
     }
-    public function parse($orderItem) {
+    public function parse($orderItem)
+    {
         $this->order_item_id = $orderItem->getId();
         $this->order_id = $orderItem->getOrderId();
         $this->created_at = $orderItem->getCreatedAt();

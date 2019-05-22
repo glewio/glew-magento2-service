@@ -6,16 +6,16 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Glew\Service\Model\Types\AbandonedCartsFactory;
 use Glew\Service\Helper\Data;
 
-class AbandonedCarts extends \Glew\Service\Controller\Module {
-
+class AbandonedCarts extends \Glew\Service\Controller\Module
+{
     protected $resultJsonFactory;
     protected $abandonedCartsFactory;
 
     /**
-     * @param \Magento\Framework\App\Action\Context $context
+     * @param \Magento\Framework\App\Action\Context            $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Glew\Service\Model\Types\AbandonedCarts $abandonedCartsFactory
-     * @param \Glew\Service\Helper\Data $helper
+     * @param \Glew\Service\Model\Types\AbandonedCartsFactory  $abandonedCartsFactory
+     * @param \Glew\Service\Helper\Data                        $helper
      */
     public function __construct(
         Context $context,
@@ -23,13 +23,11 @@ class AbandonedCarts extends \Glew\Service\Controller\Module {
         AbandonedCartsFactory $abandonedCartsFactory,
         Data $helper
     ) {
-
         $this->resultJsonFactory = $resultJsonFactory;
         $this->abandonedCartsFactory = $abandonedCartsFactory;
         $this->helper = $helper;
         parent::__construct($context);
         parent::initParams();
-
     }
 
     /**
@@ -40,7 +38,7 @@ class AbandonedCarts extends \Glew\Service\Controller\Module {
         $result = $this->resultJsonFactory->create();
         $abandonedCarts = $this->abandonedCartsFactory->create();
 
-        if($this->isAuthorized() != true || $this->isEnabled() != true) {
+        if ($this->isAuthorized() != true || $this->isEnabled() != true) {
             $result->setHttpResponseCode(\Magento\Framework\App\Response\Http::STATUS_CODE_401);
             $result->setData(['error' => 'Invalid security token or module disabled']);
             return $result;

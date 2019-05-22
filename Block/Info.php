@@ -1,9 +1,10 @@
 <?php
 namespace Glew\Service\Block;
+
 use Magento\Framework\Data\Form\Element\AbstractElement;
 
-class Info extends \Magento\Backend\Block\Widget implements \Magento\Framework\Data\Form\Element\Renderer\RendererInterface {
-
+class Info extends \Magento\Backend\Block\Widget implements \Magento\Framework\Data\Form\Element\Renderer\RendererInterface
+{
     protected $registry;
     protected $context;
 
@@ -12,15 +13,15 @@ class Info extends \Magento\Backend\Block\Widget implements \Magento\Framework\D
     * @param \Magento\Framework\Registry $registry
     * @param array $data
     */
-   public function __construct(
+    public function __construct(
        \Magento\Backend\Block\Template\Context $context,
        \Magento\Framework\Registry $registry,
        array $data = []
    ) {
-       $this->registry = $registry;
-       $this->context = $context;
-       parent::__construct($context, $data);
-   }
+        $this->registry = $registry;
+        $this->context = $context;
+        parent::__construct($context, $data);
+    }
 
     public function render(AbstractElement $element)
     {

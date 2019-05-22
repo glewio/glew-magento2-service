@@ -32,7 +32,7 @@ class AbandonedCarts
     {
         $config = $this->helper->getConfig();
         $this->pageNum = $pageNum;
-        if($id) {
+        if ($id) {
             $collection = $this->cartCollection
                 ->addFieldToFilter('main_table.entity_id', $id);
         } elseif ($startDate && $endDate) {

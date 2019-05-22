@@ -4,8 +4,8 @@ namespace Glew\Service\Model\Types;
 use Magento\Customer\Model\Group;
 use Glew\Service\Helper\Data;
 
-class AbandonedCart {
-
+class AbandonedCart
+{
     protected $helper;
     protected $group;
     
@@ -49,7 +49,8 @@ class AbandonedCart {
             $this->discount_amount = round($cart->getDiscountAmount(), 2);
             $this->discount_description = $cart->getDiscountDescription();
             $this->coupon_code = $cart->getCouponCode();
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         $this->weight = $cart->getWeight();
         $this->remote_ip = $cart->getRemoteIp();

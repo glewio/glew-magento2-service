@@ -1,6 +1,8 @@
 <?php
 namespace Glew\Service\Model\Types;
-class InventoryItem {
+
+class InventoryItem
+{
     protected $objectManager;
     /**
      * @param \Magento\Framework\ObjectManagerInterface $objectManager

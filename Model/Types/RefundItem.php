@@ -1,10 +1,10 @@
 <?php
 namespace Glew\Service\Model\Types;
 
-class RefundItem {
-
-    public function parse($refund) {
-      
+class RefundItem
+{
+    public function parse($refund)
+    {
         $this->refund_item_id = $refund->getId();
         $this->parent_id = $refund->getData('parent_id');
         $this->product_id = $refund->getData('product_id');

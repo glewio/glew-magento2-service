@@ -4,8 +4,8 @@ namespace Glew\Service\Model\Types;
 use Glew\Service\Helper\Data;
 use Glew\Service\Model\Types\StoreFactory;
 
-class Stores {
-
+class Stores
+{
     public $stores = array();
     protected $helper;
     protected $storeFactory;
@@ -31,7 +31,7 @@ class Stores {
         $stores = $this->helper->getStores();
         $stores = $this->helper->paginate($stores, $pageNum, $pageSize);
 
-        foreach($stores as $store) {
+        foreach ($stores as $store) {
             $glewStore = $this->storeFactory->create();
             $storeModel = $glewStore->parse($store);
             if ($storeModel) {

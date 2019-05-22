@@ -5,8 +5,8 @@ use Glew\Service\Helper\Data;
 use Magento\Sales\Model\ResourceModel\Order\Creditmemo\CollectionFactory;
 use Glew\Service\Model\Types\RefundFactory;
 
-class Refunds {
-
+class Refunds
+{
     public $refunds = array();
     protected $helper;
     protected $refundsCollection;

@@ -5,8 +5,8 @@ use Magento\Customer\Model\Group;
 use Glew\Service\Helper\Data;
 use Glew\Service\Model\Types\AddressFactory;
 
-class Customer {
-
+class Customer
+{
     protected $helper;
     protected $group;
     protected $addressFactory;
@@ -26,8 +26,8 @@ class Customer {
         $this->addressFactory = $addressFactory;
     }
 
-    public function parse($customer) {
-
+    public function parse($customer)
+    {
         $addressParser = $this->addressFactory->create();
 
         if (!$customer) {

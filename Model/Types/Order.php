@@ -1,6 +1,8 @@
 <?php
 namespace Glew\Service\Model\Types;
-class Order {
+
+class Order
+{
     protected $helper;
     protected $group;
     protected $objectManager;
@@ -55,7 +57,8 @@ class Order {
             $this->discount_amount = round($order->getDiscountAmount(), 2);
             $this->discount_description = $order->getDiscountDescription();
             $this->discount_code = $order->getCouponCode();
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         $this->weight = $order->getWeight();
         $this->remote_ip = $order->getRemoteIp();

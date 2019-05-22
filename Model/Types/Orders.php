@@ -1,6 +1,8 @@
 <?php
 namespace Glew\Service\Model\Types;
-class Orders {
+
+class Orders
+{
     public $orders = array();
     protected $helper;
     protected $orderCollection;

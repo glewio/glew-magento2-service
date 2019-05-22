@@ -1,6 +1,8 @@
 <?php
 namespace Glew\Service\Model\Types;
-class Product {
+
+class Product
+{
     protected $helper;
     protected $objectManager;
     /**
@@ -14,7 +16,8 @@ class Product {
         $this->objectManager = $objectManager;
         $this->helper = $helper;
     }
-    public function parse($productId, $productAttributes) {
+    public function parse($productId, $productAttributes)
+    {
         $product = $this->objectManager->create('\Magento\Catalog\Model\Product')->load($productId);
         $parentProductImage = false;
         $this->product_id = $productId;
@@ -25,7 +28,7 @@ class Product {
         $this->category_ids = $product->getCategoryIds();
         $parentProductIds = $this->objectManager->create('\Magento\ConfigurableProduct\Model\Product\Type\Configurable')
             ->getParentIdsByChild($productId);
-        if($parentProductIds) {
+        if ($parentProductIds) {
             $this->parent_product_id = $parentProductIds[0];
             $parentProduct = $this->objectManager->create('\Magento\Catalog\Model\Product')->load($parentProductIds[0]);
             $parentProductImage = $parentProduct->getImage();
@@ -37,7 +40,7 @@ class Product {
                     continue;
                 }
                 if ($field == 'image') {
-                    if((!$value || $value == 'no_selection') && $parentProductImage) {
+                    if ((!$value || $value == 'no_selection') && $parentProductImage) {
                         $value = $parentProductImage;
                     }
                     $imageUrl = $this->helper->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $value;
