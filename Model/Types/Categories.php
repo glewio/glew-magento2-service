@@ -45,7 +45,7 @@ class Categories {
         } else {
             $categories = $this->categoryCollection->create();
         }
-        //$categories->addAttributeToFilter('path', array('like' => '1/'.'%'));
+
         $categories->setOrder('created_at', $sortDir);
         $categories->setCurPage($pageNum);
         $categories->setPageSize($pageSize);
@@ -54,6 +54,7 @@ class Categories {
             return $this;
         }
 
+        
         foreach ($categories as $cat) {
             $category = $this->categoryFactory->create();
             $model = $category->parse($cat);

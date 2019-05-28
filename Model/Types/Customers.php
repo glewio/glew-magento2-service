@@ -5,23 +5,19 @@ class Customers {
     private $pageNum;
     protected $helper;
     protected $customerFactory;
-    protected $mageCustomer;
     protected $objectManager;
     /**
      * @param \Glew\Service\Helper\Data $helper
      * @param \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $customerFactory
-     * @param \Magento\Customer\Model\Customer $mageCustomer
      * @param \Magento\Framework\ObjectManagerInterface $objectManager
      */
     public function __construct(
         \Glew\Service\Helper\Data $helper,
         \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $customerFactory,
-        \Magento\Customer\Model\Customer $mageCustomer,
         \Magento\Framework\ObjectManagerInterface $objectManager
     ) {
         $this->helper = $helper;
         $this->customerFactory = $customerFactory;
-        $this->mageCustomer = $mageCustomer;
         $this->objectManager = $objectManager;
     }
     public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id) {
@@ -45,12 +41,11 @@ class Customers {
         if ($collection->getLastPageNumber() < $pageNum) {
             return $this;
         }
+        
         foreach ($collection as $customer) {
-            $mageCustomer = $this->objectManager->create('\Magento\Customer\Model\Customer');
-            $customer = $mageCustomer->load($customer->getId());
-            if ($customer && $customer->getId()) {
-                $customerParser = $this->objectManager->create('\Glew\Service\Model\Types\Customer');
-                $model = $customerParser->parse($customer);
+            $customerId = $customer->getId();
+            if ($customer && $customerId) {
+                $model = $this->objectManager->create('\Glew\Service\Model\Types\Customer')->parse($customer);
                 if ($model) {
                     $this->customers[] = $model;
                 }

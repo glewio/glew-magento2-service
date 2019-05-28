@@ -6,20 +6,24 @@ class Products {
     protected $productFactory;
     protected $objectManager;
     private $pageNum;
+    protected $resource;
     private $productAttributes = array();
     /**
      * @param \Glew\Service\Helper\Data $helper
      * @param \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productFactory
      * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Magento\Framework\App\ResourceConnection $resource
      */
     public function __construct(
         \Glew\Service\Helper\Data $helper,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productFactory,
-        \Magento\Framework\ObjectManagerInterface $objectManager
+        \Magento\Framework\ObjectManagerInterface $objectManager,
+        \Magento\Framework\App\ResourceConnection $resource
     ) {
         $this->helper = $helper;
         $this->productFactory = $productFactory;
         $this->objectManager = $objectManager;
+        $this->resource = $resource;
     }
     public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id)
     {
@@ -43,7 +47,7 @@ class Products {
         }
 
         $collection->setStore($this->helper->getStore());
-        $collection->setOrder('updated_at', $sortDir);
+        $collection->setOrder('entity_id', 'asc');
         $collection->setCurPage($pageNum);
         $collection->setPageSize($pageSize);
         if ($collection->getLastPageNumber() < $pageNum) {

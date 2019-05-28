@@ -28,8 +28,6 @@ class Customer {
 
     public function parse($customer) {
 
-        $addressParser = $this->addressFactory->create();
-
         if (!$customer) {
             return $this;
         }
@@ -39,7 +37,7 @@ class Customer {
         $groupId = $customer->getGroupId();
         $customerGroup = $this->group->load($groupId);
         $this->group_id = $groupId;
-        $this->group = $customerGroup->getCode();
+        $this->group_name = $customerGroup->getCode();
         $this->created_at = $customer->getCreatedAt();
         $this->updated_at = $customer->getUpdatedAt();
         $this->name = $customer->getName();
