@@ -10,6 +10,7 @@ abstract class Module extends \Magento\Framework\App\Action\Action {
     protected $sortDir = 'asc';
     protected $filterField = 'created_at';
     protected $id = null;
+    protected $ignoreCost = null;
     protected $customAttr = null;
     protected $helper;
 
@@ -44,6 +45,9 @@ abstract class Module extends \Magento\Framework\App\Action\Action {
         }
         if ((bool) $customAttr = $this->getRequest()->getParam('customAttr')) {
             $this->customAttr = $customAttr;
+        }
+        if ((bool) $ignoreCost = $this->getRequest()->getParam('ignore_cost')) {
+            $this->ignoreCost = $ignoreCost;
         }
     }
 

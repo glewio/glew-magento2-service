@@ -31,12 +31,11 @@ class OrderItems {
         $this->resource = $resource;
         $this->productMetadata = $productMetadata;
     }
-    public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id, $customAttr)
+    public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id, $customAttr, $ignoreCost)
     {
         $config = $this->helper->getConfig();
         $store = $this->helper->getStore();
         $edition = $this->productMetadata->getEdition();
-        // return $edition;
         $this->pageNum = $pageNum;
         $attribute = $this->eavConfig->getAttribute(\Magento\Catalog\Model\Product::ENTITY, 'cost');
         if ($id) {
@@ -51,19 +50,21 @@ class OrderItems {
             $collection = $this->orderItemsFactory->create();
         }
         $collection->addAttributeToFilter('main_table.store_id', $this->helper->getStore()->getStoreId());
-        $catProdEntDecTable = $this->resource->getTableName('catalog_product_entity_decimal');
-        if($edition === 'Community') {
-          $collection->getSelect()->joinLeft(
-              array('cost' => $catProdEntDecTable),
-              "main_table.product_id = cost.entity_id AND cost.attribute_id = {$attribute->getId()} AND cost.store_id = {$store->getStoreId()}",
-              array('cost' => 'value')
-          );
-        } else {
-          $collection->getSelect()->joinLeft(
-              array('cost' => $catProdEntDecTable),
-              "main_table.product_id = cost.row_id AND cost.attribute_id = {$attribute->getId()} AND cost.store_id = {$store->getStoreId()}",
-              array('cost' => 'value')
-          );
+        if($ignoreCost) {
+            $catProdEntDecTable = $this->resource->getTableName('catalog_product_entity_decimal');
+            if($edition === 'Community') {
+              $collection->getSelect()->joinLeft(
+                  array('cost' => $catProdEntDecTable),
+                  "main_table.product_id = cost.entity_id AND cost.attribute_id = {$attribute->getId()} AND cost.store_id = {$store->getStoreId()}",
+                  array('cost' => 'value')
+              );
+            } else {
+              $collection->getSelect()->joinLeft(
+                  array('cost' => $catProdEntDecTable),
+                  "main_table.product_id = cost.row_id AND cost.attribute_id = {$attribute->getId()} AND cost.store_id = {$store->getStoreId()}",
+                  array('cost' => 'value')
+              );
+            }
         }
         $collection->setOrder('created_at', $sortDir);
         $collection->setCurPage($pageNum);

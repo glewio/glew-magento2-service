@@ -40,7 +40,11 @@ class Product {
                     if((!$value || $value == 'no_selection') && $parentProductImage) {
                         $value = $parentProductImage;
                     }
-                    $imageUrl = $this->helper->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $value;
+                    if(!is_array($value)) {
+                        $imageUrl = $this->helper->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $value;
+                    } else {
+                        $imageUrl = null;
+                    }
                     $this->$field = $imageUrl;
                     continue;
                 }

@@ -54,7 +54,8 @@ class OrderItems extends \Glew\Service\Controller\Module {
             $this->sortDir,
             $this->filterField,
             $this->id,
-            $this->customAttr
+            $this->customAttr,
+            $this->ignoreCost
         );
 
         return $result->setData(['orderItems' => $data]);
