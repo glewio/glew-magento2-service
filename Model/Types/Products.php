@@ -34,7 +34,7 @@ class Products {
             $collection = $this->productFactory->create()
                 ->addAttributeToSelect('*')
                 ->addAttributeToFilter('entity_id', $id)
-                ->setFlag('has_stock_status_filter', true);
+                ->setFlag('has_stock_status_filter', false);
         } elseif ($startDate && $endDate) {
             $from = date('Y-m-d 00:00:00', strtotime($startDate));
             $to = date('Y-m-d 23:59:59', strtotime($endDate));
@@ -43,7 +43,8 @@ class Products {
                 ->addAttributeToFilter($filterBy, array('from' => $from, 'to' => $to));
         } else {
             $collection = $this->productFactory->create()
-                ->addAttributeToSelect('*');
+                ->addAttributeToSelect('*')
+                ->setFlag('has_stock_status_filter', false);
         }
 
         $collection->setStore($this->helper->getStore());
