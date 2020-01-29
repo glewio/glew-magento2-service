@@ -43,6 +43,7 @@ class OrderItem {
         $this->weight = round($orderItem->getWeight(), 2);
         $this->row_weight = round($orderItem->getRowWeight(), 2);
         $this->additional_data = $orderItem->getAdditionalData();
+        $this->parent_item_id = $orderItem->getParentItemId();
         return $this;
     }
 }
