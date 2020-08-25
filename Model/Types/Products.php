@@ -7,6 +7,7 @@ class Products {
     protected $objectManager;
     private $pageNum;
     protected $resource;
+    protected $productMetadata;
     private $productAttributes = array();
     /**
      * @param \Glew\Service\Helper\Data $helper
@@ -18,23 +19,33 @@ class Products {
         \Glew\Service\Helper\Data $helper,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productFactory,
         \Magento\Framework\ObjectManagerInterface $objectManager,
-        \Magento\Framework\App\ResourceConnection $resource
+        \Magento\Framework\App\ResourceConnection $resource,
+        \Magento\Framework\App\ProductMetadataInterface $productMetadata
     ) {
         $this->helper = $helper;
         $this->productFactory = $productFactory;
         $this->objectManager = $objectManager;
         $this->resource = $resource;
+        $this->productMetadata = $productMetadata;
     }
     public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id)
     {
         $config = $this->helper->getConfig();
+        $edition = $this->productMetadata->getEdition();
         $this->pageNum = $pageNum;
         $this->_getProductAttribtues();
         if( $id ) {
-            $collection = $this->productFactory->create()
-                ->addAttributeToSelect('*')
-                ->addAttributeToFilter('entity_id', $id)
-                ->setFlag('has_stock_status_filter', false);
+            if($edition === 'Community') {
+                $collection = $this->productFactory->create()
+                    ->addAttributeToSelect('*')
+                    ->addAttributeToFilter('entity_id', $id)
+                    ->setFlag('has_stock_status_filter', false);
+            } else {
+                $collection = $this->productFactory->create()
+                    ->addAttributeToSelect('*')
+                    ->addAttributeToFilter('row_id', $id)
+                    ->setFlag('has_stock_status_filter', false);
+            }
         } elseif ($startDate && $endDate) {
             $from = date('Y-m-d 00:00:00', strtotime($startDate));
             $to = date('Y-m-d 23:59:59', strtotime($endDate));
@@ -48,7 +59,11 @@ class Products {
         }
 
         $collection->setStore($this->helper->getStore());
-        $collection->setOrder('entity_id', 'asc');
+        if($edition === 'Community') {
+            $collection->setOrder('entity_id', 'asc');
+        } else {
+            $collection->setOrder('row_id', 'asc');
+        }
         $collection->setCurPage($pageNum);
         $collection->setPageSize($pageSize);
         if ($collection->getLastPageNumber() < $pageNum) {
