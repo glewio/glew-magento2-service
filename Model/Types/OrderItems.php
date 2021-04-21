@@ -50,7 +50,7 @@ class OrderItems {
             $collection = $this->orderItemsFactory->create();
         }
         $collection->addAttributeToFilter('main_table.store_id', $this->helper->getStore()->getStoreId());
-        if($ignoreCost) {
+        if(!$ignoreCost) {
             $catProdEntDecTable = $this->resource->getTableName('catalog_product_entity_decimal');
             if($edition === 'Community') {
               $collection->getSelect()->joinLeft(
