@@ -41,6 +41,12 @@ class Version extends \Glew\Service\Controller\Module {
         /** @var \Magento\Framework\Controller\Result\Json $result */
         $productMetadata = $this->productMetadataInterfaceFactory->create();
 
+        if($this->isAuthorized() != true || $this->isEnabled() != true) {
+            $result->setHttpResponseCode(\Magento\Framework\App\Response\Http::STATUS_CODE_401);
+            $result->setData(['error' => 'Invalid security token or module disabled']);
+            return $result;
+        }
+
 		    $result = $this->resultJsonFactory->create();
         $data = new \stdClass();
         $data->glewPluginVersion = (string) $this->helper->getVersion();
