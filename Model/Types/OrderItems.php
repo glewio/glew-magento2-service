@@ -30,6 +30,7 @@ class OrderItems {
         $this->eavConfig = $eavConfig;
         $this->resource = $resource;
         $this->productMetadata = $productMetadata;
+        $this->base_cost = round($orderItem->getBaseCost(), 2);
     }
     public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id, $customAttr, $ignoreCost)
     {
