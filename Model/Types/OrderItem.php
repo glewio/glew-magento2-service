@@ -44,6 +44,7 @@ class OrderItem {
         $this->row_weight = round($orderItem->getRowWeight(), 2);
         $this->additional_data = $orderItem->getAdditionalData();
         $this->parent_item_id = $orderItem->getParentItemId();
+        $this->base_cost = round($orderItem->getBaseCost(), 2);
         return $this;
     }
 }
