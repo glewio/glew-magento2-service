@@ -31,7 +31,7 @@ class OrderItems {
         $this->resource = $resource;
         $this->productMetadata = $productMetadata;
     }
-    public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id, $customAttr, $ignoreCost)
+    public function load($pageSize, $pageNum, $sortDir, $filterBy, $id, $customAttr, $ignoreCost, $startDate = null, $endDate = null)
     {
         $config = $this->helper->getConfig();
         $store = $this->helper->getStore();

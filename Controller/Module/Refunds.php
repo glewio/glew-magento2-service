@@ -49,11 +49,11 @@ class Refunds extends \Glew\Service\Controller\Module {
         $data = $refunds->load(
             $this->pageSize,
             $this->pageNum,
-            $this->startDate,
-            $this->endDate,
             $this->sortDir,
             $this->filterField,
-            $this->id
+            $this->id,
+            $this->startDate,
+            $this->endDate
         );
 
         return $result->setData(['refunds' => $data]);

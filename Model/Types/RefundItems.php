@@ -33,7 +33,7 @@ class RefundItems {
         $this->resource = $resource;
     }
 
-    public function load($pageSize, $pageNum, $startDate = null, $endDate = null, $sortDir, $filterBy, $id)
+    public function load($pageSize, $pageNum, $sortDir, $filterBy, $id, $startDate = null, $endDate = null)
     {
         $config = $this->helper->getConfig();
         $this->pageNum = $pageNum;

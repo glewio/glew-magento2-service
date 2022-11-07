@@ -49,13 +49,13 @@ class OrderItems extends \Glew\Service\Controller\Module {
         $data = $orderItems->load(
             $this->pageSize,
             $this->pageNum,
-            $this->startDate,
-            $this->endDate,
             $this->sortDir,
             $this->filterField,
             $this->id,
             $this->customAttr,
-            $this->ignoreCost
+            $this->ignoreCost,
+            $this->startDate,
+            $this->endDate
         );
 
         return $result->setData(['orderItems' => $data]);

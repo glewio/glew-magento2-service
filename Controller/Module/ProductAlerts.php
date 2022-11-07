@@ -49,11 +49,11 @@ class ProductAlerts extends \Glew\Service\Controller\Module {
         $data = $productAlerts->load(
             $this->pageSize,
             $this->pageNum,
-            $this->startDate,
-            $this->endDate,
             $this->sortDir,
             $this->filterField,
-            $this->id
+            $this->id,
+            $this->startDate,
+            $this->endDate
         );
 
         return $result->setData(['alerts' => $data]);
