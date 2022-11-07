@@ -43,10 +43,10 @@ class AbandonedCart {
         $this->items_count = $cart->getItemsCount();
         $this->items_qty = $cart->getItemsQty();
         $this->products = $products;
-        $this->total = round($cart->getSubtotal(), 2);
+        $this->total = ($orderItem->getSubtotal()) ? round($cart->getSubtotal(), 2) : null;
 
         try {
-            $this->discount_amount = round($cart->getDiscountAmount(), 2);
+            $this->discount_amount = ($orderItem->getDiscountAmount()) ? round($cart->getDiscountAmount(), 2) : null;
             $this->discount_description = $cart->getDiscountDescription();
             $this->coupon_code = $cart->getCouponCode();
         } catch (\Exception $e) {}
