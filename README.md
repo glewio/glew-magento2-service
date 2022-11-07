@@ -26,7 +26,7 @@ Next, add the required package your root `composer.json` file:
 
 ```json
     "require": {
-        "glewio/glew-magento2-service": "2.1.10"
+        "glewio/glew-magento2-service": "2.1.11"
     }
 ```
 

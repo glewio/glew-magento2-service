@@ -35,10 +35,10 @@ class Order {
         $this->total_qty_ordered = (int) $order->getTotalQtyOrdered();
         $this->currency = $order->getOrderCurrencyCode();
         $this->base_currency_total = round($order->getBaseGrandTotal(), 2);
-        $this->total = ($orderItem->getGrandTotal()) ? round($order->getGrandTotal(), 2) : null;
-        $this->tax = ($orderItem->getTaxAmount()) ? round($order->getTaxAmount(), 2) : null;
-        $this->shipping_total = ($orderItem->getShippingAmount()) ? round($order->getShippingAmount(), 2) : null;
-        $this->shipping_tax = ($orderItem->getShippingTaxAmount()) ? round($order->getShippingTaxAmount(), 2) : null;
+        $this->total = ($order->getGrandTotal()) ? round($order->getGrandTotal(), 2) : null;
+        $this->tax = ($order->getTaxAmount()) ? round($order->getTaxAmount(), 2) : null;
+        $this->shipping_total = ($order->getShippingAmount()) ? round($order->getShippingAmount(), 2) : null;
+        $this->shipping_tax = ($order->getShippingTaxAmount()) ? round($order->getShippingTaxAmount(), 2) : null;
         $this->shipping_description = $order->getShippingDescription();
         try {
             $payment = $order->getPayment();
@@ -52,7 +52,7 @@ class Order {
         }
 
         try {
-            $this->discount_amount = ($orderItem->getDiscountAmount()) ? round($order->getDiscountAmount(), 2) : null;
+            $this->discount_amount = ($order->getDiscountAmount()) ? round($order->getDiscountAmount(), 2) : null;
             $this->discount_description = $order->getDiscountDescription();
             $this->discount_code = $order->getCouponCode();
         } catch (\Exception $e) {}
